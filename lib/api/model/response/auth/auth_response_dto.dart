@@ -1,6 +1,7 @@
 
 
 import 'package:e_commerce/api/model/response/auth/user_dto.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 part 'auth_response_dto.g.dart';
 
@@ -9,7 +10,7 @@ class AuthResponseDto {
   @JsonKey(name: "message")
   final String? message;
   @JsonKey(name: "user")
-  final User? user;
+  final UserDto? user;
   @JsonKey(name: "token")
   final String? token;
 
