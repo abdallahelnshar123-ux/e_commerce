@@ -1,0 +1,25 @@
+import 'package:e_commerce/api/api_services.dart';
+import 'package:e_commerce/data/data_sources/remote/auth/auth_remote_data_source.dart';
+import 'package:e_commerce/domain/entities/request/login/login_request.dart';
+import 'package:e_commerce/domain/entities/request/register/register_request.dart';
+import 'package:e_commerce/domain/entities/response/auth/auth_response.dart';
+import 'package:injectable/injectable.dart';
+
+@Injectable(as:  AuthRemoteDataSource)
+class AuthRemoteDataSourceImpl implements AuthRemoteDataSource{
+  final ApiServices _apiServices;
+  AuthRemoteDataSourceImpl(this._apiServices);
+
+  @override
+  Future<AuthResponse> login(LoginRequest loginRequest) {
+    // TODO: implement login
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<AuthResponse> register(RegisterRequest registerRequest) {
+    // TODO: implement register
+    throw UnimplementedError();
+  }
+ 
+}
