@@ -13,7 +13,10 @@ class AppAssets {
   static const String userIcon = 'assets/icons/user_icon.svg';
   static const String homeIcon = 'assets/icons/home_icon.svg';
   static const String heartIcon = 'assets/icons/heart_icon.svg';
+  static const String hearFilledIcon = 'assets/icons/heart_filled_icon.svg';
   static const String categoryIcon = 'assets/icons/category_icon.svg';
+  static const String cartIcon = 'assets/icons/cart_icon.svg';
+  static const String addToCartIcon = 'assets/icons/add_to_cart_icon.svg';
 
 
 
