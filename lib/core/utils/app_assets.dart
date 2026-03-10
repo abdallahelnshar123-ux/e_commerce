@@ -1,0 +1,20 @@
+class AppAssets {
+  /// images ================================================================
+  static const String routeLogo = 'assets/images/route_logo.png';
+  static const String testProductImage = 'assets/images/test_product_image.png';
+  static const String announcementImage1 =
+      'assets/images/announcement_image1.png';
+  static const String announcementImage2 =
+      'assets/images/announcement_image2.png';
+  static const String announcementImage3 =
+      'assets/images/announcement_image3.png';
+
+  /// icons ==================================================================
+  static const String userIcon = 'assets/icons/user_icon.svg';
+  static const String homeIcon = 'assets/icons/home_icon.svg';
+  static const String heartIcon = 'assets/icons/heart_icon.svg';
+  static const String categoryIcon = 'assets/icons/category_icon.svg';
+
+
+
+}
