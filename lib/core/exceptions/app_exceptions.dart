@@ -1,19 +1,19 @@
-abstract class AppExceptions implements Exception {
+abstract class AppException implements Exception {
   String message;
 
   int? statusCode;
 
-  AppExceptions({required this.message, required this.statusCode});
+  AppException({required this.message, required this.statusCode});
 }
 
-class ServerException extends AppExceptions {
-  ServerException({required super.message, required super.statusCode});
+class ServerException extends AppException {
+  ServerException({required super.message,  super.statusCode});
 }
 
-class NetworkException extends AppExceptions {
+class NetworkException extends AppException {
   NetworkException({required super.message,  super.statusCode});
 }
 
-class UnexpectedException extends AppExceptions {
+class UnexpectedException extends AppException {
   UnexpectedException({required super.message,  super.statusCode});
 }
