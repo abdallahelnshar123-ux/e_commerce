@@ -1,4 +1,6 @@
 import 'package:e_commerce/api/api_services.dart';
+import 'package:e_commerce/api/mapper/auth/auth_response_mapper.dart';
+import 'package:e_commerce/api/mapper/auth/login_request_mapper.dart';
 import 'package:e_commerce/data/data_sources/remote/auth/auth_remote_data_source.dart';
 import 'package:e_commerce/domain/entities/request/login/login_request.dart';
 import 'package:e_commerce/domain/entities/request/register/register_request.dart';
@@ -11,9 +13,10 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource{
   AuthRemoteDataSourceImpl(this._apiServices);
 
   @override
-  Future<AuthResponse> login(LoginRequest loginRequest) {
-    // TODO: implement login
-    throw UnimplementedError();
+  Future<AuthResponse> login(LoginRequest loginRequest)async {
+   var authResponse = await _apiServices.login(loginRequest.toLoginRequestDto());
+   return authResponse.toAuthResponse();
+
   }
 
   @override
