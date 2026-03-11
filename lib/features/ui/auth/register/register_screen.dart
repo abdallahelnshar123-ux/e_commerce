@@ -9,19 +9,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../core/utils/app_routes.dart';
 import '../../widgets/custom_elevated_button.dart';
 import '../../widgets/custom_text_form_field.dart';
-import '../register/register_screen.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
   LoginViewModel viewModel = getIt<LoginViewModel>();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -66,26 +64,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 children: [
                   SizedBox(height: 90.h),
                   Image.asset(AppAssets.routeLogo),
-                  SizedBox(height: 60.h),
-                  FittedBox(
-                    fit: BoxFit.scaleDown,
-                    child: Text(
-                      'Welcome Back To Route',
-                      style: AppStyles.sBold24White,
-                    ),
-                  ),
-                  Text(
-                    'Please sign in with your mail',
-                    style: AppStyles.light16White,
-                  ),
-                  SizedBox(height: 40.h),
-                  Text('Email', style: AppStyles.medium18White),
+                  SizedBox(height: 20.h),
+                  Text('Full Name', style: AppStyles.medium18White),
                   SizedBox(height: 10.h),
                   CustomTextFormField(
                     validator: (text) {
-                      if (text
-                          ?.trim()
-                          .isEmpty ?? true) {
+                      if (text?.trim().isEmpty ?? true) {
                         return 'please_enter_email';
                       }
                       final bool emailValid = RegExp(
@@ -98,7 +82,53 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                     controller: emailController,
 
-                    hintText: "Enter your email",
+                    hintText: "enter your full name",
+                    hintStyle: AppStyles.light18Black70,
+                    filled: true,
+                    fillColor: AppColors.whiteColor,
+                  ),
+                  SizedBox(height: 40.h),
+                  Text('Phone', style: AppStyles.medium18White),
+                  SizedBox(height: 10.h),
+                  CustomTextFormField(
+                    validator: (text) {
+                      if (text?.trim().isEmpty ?? true) {
+                        return 'please_enter_email';
+                      }
+                      final bool emailValid = RegExp(
+                        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
+                      ).hasMatch(text!);
+                      if (!emailValid) {
+                        return 'please_enter_valid_email';
+                      }
+                      return null;
+                    },
+                    controller: emailController,
+
+                    hintText: "Enter your mobile no.",
+                    hintStyle: AppStyles.light18Black70,
+                    filled: true,
+                    fillColor: AppColors.whiteColor,
+                  ),
+                  SizedBox(height: 40.h),
+                  Text('Email', style: AppStyles.medium18White),
+                  SizedBox(height: 10.h),
+                  CustomTextFormField(
+                    validator: (text) {
+                      if (text?.trim().isEmpty ?? true) {
+                        return 'please_enter_email';
+                      }
+                      final bool emailValid = RegExp(
+                        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
+                      ).hasMatch(text!);
+                      if (!emailValid) {
+                        return 'please_enter_valid_email';
+                      }
+                      return null;
+                    },
+                    controller: emailController,
+
+                    hintText: "Enter your email address",
                     hintStyle: AppStyles.light18Black70,
                     filled: true,
                     fillColor: AppColors.whiteColor,
@@ -109,9 +139,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(height: 10.h),
                   CustomTextFormField(
                     validator: (text) {
-                      if (text
-                          ?.trim()
-                          .isEmpty ?? true) {
+                      if (text?.trim().isEmpty ?? true) {
                         return 'please_enter_password';
                       }
                       if (text!.length < 6) {
@@ -142,70 +170,20 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 15.h),
 
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      TextButton(
-                        style: TextButton.styleFrom(
-                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                          padding: EdgeInsets.only(bottom: 8),
-                        ),
-                        onPressed: () {
-                          //todo Navigate to Forget Password Screen
-                        },
-                        child: Text(
-                          "Forgot password",
-                          style: AppStyles.regular18White,
-                        ),
-                      ),
-                    ],
-                  ),
                   SizedBox(height: 55.h),
 
                   CustomElevatedButton(
                     backGroundColor: AppColors.whiteColor,
                     onPressed: () {
                       if (formKey.currentState?.validate() == true) {
-                        viewModel.login(email: emailController.text,
-                            password: passwordController.text);
+                        viewModel.login(
+                          email: emailController.text,
+                          password: passwordController.text,
+                        );
                       }
                     },
-                    child: Text("login", style: AppStyles.sBold20MainColor),
-                  ),
-                  SizedBox(height: 32.h),
-
-                  FittedBox(
-                    fit: BoxFit.scaleDown,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Don’t have an account? ",
-                          style: AppStyles.medium18White,
-                        ),
-                        TextButton(
-                          style: TextButton.styleFrom(
-                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                            padding: EdgeInsets.zero,
-                          ),
-                          onPressed: () {
-                            //todo Navigate to Register Screen
-                            Navigator.pushReplacementNamed(
-                              context,
-                              AppRoutes.registerRouteName,
-                            );
-
-
-                          },
-                          child: Text(
-                            "Create Account",
-                            style: AppStyles.medium18White,
-                          ),
-                        ),
-                      ],
-                    ),
+                    child: Text("Sign up", style: AppStyles.sBold20MainColor),
                   ),
                   SizedBox(height: 32.h),
                 ],
