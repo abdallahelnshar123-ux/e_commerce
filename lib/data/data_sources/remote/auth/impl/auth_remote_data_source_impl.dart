@@ -1,7 +1,4 @@
 import 'package:e_commerce/api/api_services.dart';
-import 'package:e_commerce/api/mapper/auth/auth_response_mapper.dart';
-import 'package:e_commerce/api/mapper/auth/login_request_mapper.dart';
-import 'package:e_commerce/api/mapper/auth/register_request_mapper.dart';
 import 'package:e_commerce/data/data_sources/remote/auth/auth_remote_data_source.dart';
 import 'package:e_commerce/domain/entities/request/login/login_request.dart';
 import 'package:e_commerce/domain/entities/request/register/register_request.dart';

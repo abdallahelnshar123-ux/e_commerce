@@ -15,15 +15,17 @@ import 'package:injectable/injectable.dart' as _i526;
 import 'package:pretty_dio_logger/pretty_dio_logger.dart' as _i528;
 
 import '../../api/api_services.dart' as _i394;
-import '../../api/data_sources/remote/auth/auth_remote_data_source_impl.dart'
-    as _i989;
 import '../../api/dio/get_it_module.dart' as _i814;
 import '../../data/data_sources/remote/auth/auth_remote_data_source.dart'
     as _i202;
+import '../../data/data_sources/remote/auth/impl/auth_remote_data_source_impl.dart'
+    as _i646;
 import '../../data/repository/auth/auth_repository_impl.dart' as _i392;
 import '../../domain/repository/auth/auth_repository.dart' as _i912;
 import '../../domain/use_cases/login_use_cases.dart' as _i408;
 import '../../features/ui/auth/login/cubit/login_view_model.dart' as _i245;
+import '../../features/ui/auth/register/cubit/register_view_model.dart'
+    as _i873;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -37,7 +39,10 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i528.PrettyDioLogger>(() => getItModule.prettyDioLogger);
     gh.singleton<_i394.ApiServices>(() => getItModule.apiServices);
     gh.factory<_i202.AuthRemoteDataSource>(
-      () => _i989.AuthRemoteDataSourceImpl(gh<_i394.ApiServices>()),
+      () => _i646.AuthRemoteDataSourceImpl(gh<_i394.ApiServices>()),
+    );
+    gh.factory<_i912.AuthRepository>(
+      () => _i392.AuthRepositoryImpl(gh<_i202.AuthRemoteDataSource>()),
     );
     gh.singleton<_i361.Dio>(
       () => getItModule.provideDio(
@@ -45,14 +50,14 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i528.PrettyDioLogger>(),
       ),
     );
-    gh.factory<_i912.AuthRepository>(
-      () => _i392.AuthRepositoryImpl(gh<_i202.AuthRemoteDataSource>()),
-    );
     gh.factory<_i408.LoginUseCases>(
       () => _i408.LoginUseCases(gh<_i912.AuthRepository>()),
     );
     gh.factory<_i245.LoginViewModel>(
       () => _i245.LoginViewModel(gh<_i408.LoginUseCases>()),
+    );
+    gh.factory<_i873.LoginViewModel>(
+      () => _i873.LoginViewModel(gh<_i408.LoginUseCases>()),
     );
     return this;
   }
