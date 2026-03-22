@@ -136,7 +136,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     fillColor: AppColors.whiteColor,
                   ),
                   SizedBox(height: 32.h),
-
                   Text('Password', style: AppStyles.medium18White),
                   SizedBox(height: 10.h),
                   CustomTextFormField(
@@ -173,7 +172,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                   ),
                   SizedBox(height: 32.h),
-
                   Text('Confirm Password', style: AppStyles.medium18White),
                   SizedBox(height: 10.h),
                   CustomTextFormField(
