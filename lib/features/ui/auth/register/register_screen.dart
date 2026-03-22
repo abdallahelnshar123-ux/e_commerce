@@ -23,8 +23,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
   LoginViewModel viewModel = getIt<LoginViewModel>();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController confirmPasswordController = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  bool isObscure = true;
+  bool obscurePassword = true;
+  bool obscureRePassword = true;
 
   @override
   Widget build(BuildContext context) {
@@ -148,7 +150,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       return null;
                     },
                     controller: passwordController,
-                    obscureText: isObscure,
+                    obscureText: obscurePassword,
                     obscuringCharacter: '*',
                     hintText: "Enter your password",
                     hintStyle: AppStyles.light18Black70,
@@ -159,9 +161,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         Icons.visibility_off_rounded,
                         color: AppColors.grayColor,
                       ),
-                      isSelected: isObscure,
+                      isSelected: obscurePassword,
                       onPressed: () {
-                        isObscure = !isObscure;
+                        obscurePassword = !obscurePassword;
                         setState(() {});
                       },
                       icon: Icon(
@@ -170,7 +172,43 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                     ),
                   ),
+                  SizedBox(height: 32.h),
 
+                  Text('Confirm Password', style: AppStyles.medium18White),
+                  SizedBox(height: 10.h),
+                  CustomTextFormField(
+                    validator: (text) {
+                      if (text?.trim().isEmpty ?? true) {
+                        return 'please_confirm_password';
+                      }
+                      if (text != passwordController.text) {
+                        return 'password_does_not_match';
+                      }
+                      return null;
+                    },
+                    controller: confirmPasswordController,
+                    obscureText: obscureRePassword,
+                    obscuringCharacter: '*',
+                    hintText: "Confirm your password",
+                    hintStyle: AppStyles.light18Black70,
+                    filled: true,
+                    fillColor: AppColors.whiteColor,
+                    suffixIcon: IconButton(
+                      selectedIcon: Icon(
+                        Icons.visibility_off_rounded,
+                        color: AppColors.grayColor,
+                      ),
+                      isSelected: obscureRePassword,
+                      onPressed: () {
+                        obscureRePassword = !obscureRePassword;
+                        setState(() {});
+                      },
+                      icon: Icon(
+                        Icons.visibility_rounded,
+                        color: AppColors.grayColor,
+                      ),
+                    ),
+                  ),
                   SizedBox(height: 55.h),
 
                   CustomElevatedButton(

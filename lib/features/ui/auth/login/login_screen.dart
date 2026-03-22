@@ -12,7 +12,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/utils/app_routes.dart';
 import '../../widgets/custom_elevated_button.dart';
 import '../../widgets/custom_text_form_field.dart';
-import '../register/register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
