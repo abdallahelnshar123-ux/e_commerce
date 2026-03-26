@@ -4,25 +4,36 @@ import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:e_commerce/core/exceptions/app_exceptions.dart';
 import 'package:e_commerce/domain/entities/request/login/login_request.dart';
+import 'package:e_commerce/domain/entities/request/register/register_request.dart';
 import 'package:e_commerce/domain/use_cases/login_use_cases.dart';
+import 'package:e_commerce/domain/use_cases/register_use_cases.dart';
 import 'package:e_commerce/features/ui/auth/auth_states.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
-class LoginViewModel extends Cubit<AuthStates> {
-  final LoginUseCases _loginUseCases;
+class RegisterViewModel extends Cubit<AuthStates> {
+  final RegisterUseCases _registerUseCases;
 
-  LoginViewModel(this._loginUseCases) : super(AuthLoadingState());
+  RegisterViewModel(this._registerUseCases) : super(AuthLoadingState());
 
-  Future<void> login({required String email, required String password}) async {
+  Future<void> register({
+    required String email,
+    required String password,
+    required String rePassword,
+    required String phone,
+    required String name,
+  }) async {
     try {
       emit(AuthLoadingState());
-      LoginRequest loginRequest = LoginRequest(
+     RegisterRequest registerRequest = RegisterRequest(
         email: email,
         password: password,
+        rePassword: rePassword,
+        phone: phone,
+        name: name,
       );
 
-      var authResponse = await _loginUseCases.invoke(loginRequest);
+      var authResponse = await _registerUseCases.invoke(registerRequest);
       emit(AuthSuccessState(authResponse: authResponse));
     } on DioException catch (e) {
       String message = (e.error is AppException)

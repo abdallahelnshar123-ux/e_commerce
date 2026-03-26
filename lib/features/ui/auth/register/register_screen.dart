@@ -1,10 +1,11 @@
 import 'package:e_commerce/core/di/di.dart';
 import 'package:e_commerce/core/utils/app_assets.dart';
 import 'package:e_commerce/core/utils/app_colors.dart';
+import 'package:e_commerce/core/utils/app_routes.dart';
 import 'package:e_commerce/core/utils/app_styles.dart';
 import 'package:e_commerce/core/utils/dialog_utils.dart';
 import 'package:e_commerce/features/ui/auth/auth_states.dart';
-import 'package:e_commerce/features/ui/auth/login/cubit/login_view_model.dart';
+import 'package:e_commerce/features/ui/auth/register/cubit/register_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,17 +21,31 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  LoginViewModel viewModel = getIt<LoginViewModel>();
+  RegisterViewModel viewModel = getIt<RegisterViewModel>();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
+
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   bool obscurePassword = true;
   bool obscureRePassword = true;
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    confirmPasswordController.dispose();
+    nameController.dispose();
+    phoneController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return BlocListener<LoginViewModel, AuthStates>(
+    return BlocListener<RegisterViewModel, AuthStates>(
       bloc: viewModel,
       listener: (context, state) {
         if (state is AuthLoadingState) {
@@ -39,9 +54,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
           DialogUtils.hideLoading(context: context);
           DialogUtils.showMessage(
             context: context,
-            message: 'Login Successfully',
+            message: 'Register Successfully',
             title: 'Success',
             posActionText: 'ok',
+            posAction: () {
+              Navigator.popAndPushNamed(context, AppRoutes.loginRouteName);
+            },
           );
         } else if (state is AuthErrorState) {
           DialogUtils.hideLoading(context: context);
@@ -74,15 +92,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       if (text?.trim().isEmpty ?? true) {
                         return 'please_enter_email';
                       }
-                      final bool emailValid = RegExp(
-                        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
-                      ).hasMatch(text!);
-                      if (!emailValid) {
-                        return 'please_enter_valid_email';
-                      }
                       return null;
                     },
-                    controller: emailController,
+                    controller: nameController,
 
                     hintText: "enter your full name",
                     hintStyle: AppStyles.light18Black70,
@@ -97,15 +109,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       if (text?.trim().isEmpty ?? true) {
                         return 'please_enter_email';
                       }
-                      final bool emailValid = RegExp(
-                        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
-                      ).hasMatch(text!);
-                      if (!emailValid) {
-                        return 'please_enter_valid_email';
-                      }
                       return null;
                     },
-                    controller: emailController,
+                    controller: phoneController,
 
                     hintText: "Enter your mobile no.",
                     hintStyle: AppStyles.light18Black70,
@@ -213,9 +219,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     backGroundColor: AppColors.whiteColor,
                     onPressed: () {
                       if (formKey.currentState?.validate() == true) {
-                        viewModel.login(
+                        viewModel.register(
                           email: emailController.text,
                           password: passwordController.text,
+                          rePassword: confirmPasswordController.text,
+                          phone: phoneController.text,
+                          name: phoneController.text,
                         );
                       }
                     },

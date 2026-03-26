@@ -3,6 +3,7 @@ import 'package:e_commerce/core/my_bloc_observer.dart';
 import 'package:e_commerce/core/utils/app_theme.dart';
 import 'package:e_commerce/features/ui/auth/login/login_screen.dart';
 import 'package:e_commerce/features/ui/auth/register/register_screen.dart';
+import 'package:e_commerce/features/ui/home_screen/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -27,10 +28,11 @@ class MyApp extends StatelessWidget {
       builder: (context, child) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          initialRoute: AppRoutes.loginRouteName,
+          initialRoute: AppRoutes.homeRouteName,
           routes: {
             AppRoutes.loginRouteName : (context) => LoginScreen(),
             AppRoutes.registerRouteName : (context) => RegisterScreen(),
+            AppRoutes.homeRouteName : (context) => HomeScreen(),
 
           },
           theme: AppTheme.lightTheme ,
