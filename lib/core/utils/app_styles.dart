@@ -1,5 +1,6 @@
 import 'package:e_commerce/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppStyles {
@@ -35,17 +36,17 @@ class AppStyles {
   );
   static TextStyle light14DescriptionColor = GoogleFonts.poppins(
     fontWeight: FontWeight.w300,
-    fontSize: 14,
+    fontSize: 14.sp,
     color: AppColors.descriptionColor,
   );
   static TextStyle medium18TextColor = GoogleFonts.poppins(
     fontWeight: FontWeight.w500,
-    fontSize: 18,
+    fontSize: 18.sp,
     color: AppColors.textColor,
   );
   static TextStyle regular14TextColor = GoogleFonts.poppins(
     fontWeight: FontWeight.w400,
-    fontSize: 14,
+    fontSize: 14.sp,
     color: AppColors.textColor,
   );
   static TextStyle medium14TextColor = GoogleFonts.poppins(

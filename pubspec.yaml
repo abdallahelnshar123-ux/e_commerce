@@ -46,6 +46,8 @@ dependencies:
   flutter_native_splash: ^2.4.7
   google_fonts: ^8.0.2
   flutter_bloc: ^9.1.1
+  flutter_image_slideshow: ^0.1.6
+  cached_network_image: ^3.4.1
 
 dev_dependencies:
   flutter_test:

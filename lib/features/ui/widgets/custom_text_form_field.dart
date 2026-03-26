@@ -26,6 +26,9 @@ class CustomTextFormField extends StatelessWidget {
   final TextInputType? keyboardType;
   final String obscuringCharacter;
   final bool obscureText;
+  final double  borderWidth;
+  final double?  borderRadius;
+  final double?  contentPadding;
 
   const CustomTextFormField({
     super.key,
@@ -47,6 +50,9 @@ class CustomTextFormField extends StatelessWidget {
     this.keyboardType,
     this.errorStyle,
     this.onFieldSubmitted,
+    this.borderWidth = 1,
+    this.borderRadius,
+    this.contentPadding
   });
 
   @override
@@ -64,6 +70,9 @@ class CustomTextFormField extends StatelessWidget {
       cursorColor: AppColors.mainColor,
       cursorHeight: 30,
       decoration: InputDecoration(
+        contentPadding: EdgeInsets.symmetric(
+          vertical: contentPadding ?? 10
+        ) ,
         filled: filled,
         fillColor: fillColor,
         errorMaxLines: 2,
@@ -90,8 +99,8 @@ class CustomTextFormField extends StatelessWidget {
 
   OutlineInputBorder builtDecorationBorder({required Color borderColor}) {
     return OutlineInputBorder(
-      borderRadius: BorderRadius.circular(16),
-      borderSide: BorderSide(width: 2, color: borderColor),
+      borderRadius: BorderRadius.circular(borderRadius ?? 0 ),
+      borderSide: BorderSide(width: borderWidth, color: borderColor),
     );
   }
 }

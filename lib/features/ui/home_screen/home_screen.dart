@@ -1,9 +1,5 @@
 import 'package:e_commerce/core/di/di.dart';
 import 'package:e_commerce/features/ui/home_screen/cubit/home_screen_view_model.dart';
-import 'package:e_commerce/features/ui/home_screen/tabs/favorite_tab/favorite_tab.dart';
-import 'package:e_commerce/features/ui/home_screen/tabs/home_tab/home_tab.dart';
-import 'package:e_commerce/features/ui/home_screen/tabs/products_tab/products_tab.dart';
-import 'package:e_commerce/features/ui/home_screen/tabs/user_tab/UserTab.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
