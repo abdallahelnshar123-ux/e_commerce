@@ -7,7 +7,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 class CategoryItem extends StatelessWidget {
   final String imageUrl;
   final String text;
-  const CategoryItem({super.key , required this.imageUrl , required this.text});
+
+  const CategoryItem({super.key, required this.imageUrl, required this.text});
 
   @override
   Widget build(BuildContext context) {
@@ -17,13 +18,25 @@ class CategoryItem extends StatelessWidget {
       children: [
         CircleAvatar(
           radius: 50.r,
-          child: CachedNetworkImage(
-            imageUrl: imageUrl,
-            placeholder: (context, url) => MainLoadingWidget(),
-            errorWidget: (context, url, error) => Icon(Icons.error),
-          ),
+          child:
+              // Image.network(imageUrl , fit: BoxFit.cover,)
+        ClipOval(
+
+                child: CachedNetworkImage(
+                  width: double.infinity,
+                  height: double.infinity,
+                  fit: BoxFit.cover,
+                  imageUrl: imageUrl,
+                  placeholder: (context, url) => MainLoadingWidget(),
+                  errorWidget: (context, url, error) => Icon(Icons.error),
+                ),
+              ),
         ),
-        Text(text , style: AppStyles.regular14TextColor, textAlign: TextAlign.center,),
+        Text(
+          text,
+          style: AppStyles.regular14TextColor,
+          textAlign: TextAlign.center,
+        ),
       ],
     );
   }

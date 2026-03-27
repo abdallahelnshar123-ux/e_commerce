@@ -43,6 +43,8 @@ import '../../features/ui/auth/register/cubit/register_view_model.dart'
     as _i873;
 import '../../features/ui/home_screen/cubit/home_screen_view_model.dart'
     as _i313;
+import '../../features/ui/home_screen/tabs/home_tab/cubit/home_tab_view_model.dart'
+    as _i519;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -97,6 +99,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i245.LoginViewModel>(
       () => _i245.LoginViewModel(gh<_i408.LoginUseCases>()),
+    );
+    gh.factory<_i519.HomeTabViewModel>(
+      () => _i519.HomeTabViewModel(gh<_i201.GetAllCategoriesUseCase>()),
     );
     return this;
   }

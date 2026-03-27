@@ -1,17 +1,37 @@
+import 'package:e_commerce/core/di/di.dart';
 import 'package:e_commerce/core/utils/app_assets.dart';
 import 'package:e_commerce/core/utils/app_colors.dart';
 import 'package:e_commerce/core/utils/app_styles.dart';
+import 'package:e_commerce/domain/entities/response/common/category_brand.dart';
+import 'package:e_commerce/features/ui/home_screen/tabs/home_tab/cubit/home_tab_states.dart';
+import 'package:e_commerce/features/ui/home_screen/tabs/home_tab/cubit/home_tab_view_model.dart';
 import 'package:e_commerce/features/ui/home_screen/tabs/home_tab/widget/category_item.dart';
 import 'package:e_commerce/features/ui/home_screen/tabs/home_tab/widget/section_title_widget.dart';
 import 'package:e_commerce/features/ui/home_screen/tabs/home_tab/widget/slide_show_item.dart';
 import 'package:e_commerce/features/ui/widgets/custom_text_form_field.dart';
+import 'package:e_commerce/features/ui/widgets/main_error_widget.dart';
+import 'package:e_commerce/features/ui/widgets/main_loading_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 
-class HomeTab extends StatelessWidget {
+class HomeTab extends StatefulWidget {
   const HomeTab({super.key});
+
+  @override
+  State<HomeTab> createState() => _HomeTabState();
+}
+
+class _HomeTabState extends State<HomeTab> {
+  HomeTabViewModel viewModel = getIt<HomeTabViewModel>();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    viewModel.getAllCategories();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,8 +61,23 @@ class HomeTab extends StatelessWidget {
               ),
               SizedBox(
                 width: double.infinity,
-                height: (150.h * 2 + 16.w),
-                child: builtCategoriesWidget(),
+                height: (165.h * 2 + 16.w),
+                child: BlocBuilder<HomeTabViewModel, HomeTabStates>(
+                  bloc: viewModel,
+                  builder: (BuildContext context, state) {
+                    if (state is CategorySuccessState) {
+                      return builtCategoriesWidget(state.categoriesList);
+                    } else if (state is CategoryErrorState) {
+                      return MainErrorWidget(
+                        errorMessage: state.errorMessage,
+                        onPressed: () {
+                          viewModel.getAllCategories();
+                        },
+                      );
+                    }
+                    return MainLoadingWidget();
+                  },
+                ),
               ),
               SectionTitleWidget(titleText: 'Home Appliance'),
             ],
@@ -126,19 +161,21 @@ Padding builtSlideShow() {
   );
 }
 
-GridView builtCategoriesWidget() {
+GridView builtCategoriesWidget(List<CategoryOrBrand> categoriesList) {
   return GridView.builder(
     padding: EdgeInsets.symmetric(horizontal: 16.w),
     scrollDirection: Axis.horizontal,
-    itemCount: 10,
+    itemCount: categoriesList.length,
     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
       crossAxisCount: 2,
-      childAspectRatio: 150.h / 100.w,
+      childAspectRatio: 165.h / 100.w,
       mainAxisSpacing: 16.w,
       crossAxisSpacing: 16.w,
     ),
-    itemBuilder: (context, index) =>
-        CategoryItem(imageUrl: 'ds', text: 'sdhsdshkj'),
+    itemBuilder: (context, index) => CategoryItem(
+      imageUrl: categoriesList[index].image!,
+      text: categoriesList[index].name!,
+    ),
   );
 }
 
