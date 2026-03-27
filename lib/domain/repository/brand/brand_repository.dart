@@ -1,0 +1,6 @@
+import 'package:e_commerce/domain/entities/response/common/category_brand.dart';
+
+abstract class BrandRepository {
+  Future<List<CategoryOrBrand>?> getAllBrands();
+
+}
