@@ -28,14 +28,21 @@ import '../../data/data_sources/remote/category/category_remote_data_source.dart
     as _i89;
 import '../../data/data_sources/remote/category/impl/category_remote_data_source_impl.dart'
     as _i214;
+import '../../data/data_sources/remote/product/impl/product_remote_data_source_impl.dart'
+    as _i1055;
+import '../../data/data_sources/remote/product/product_remote_data_source.dart'
+    as _i1038;
 import '../../data/repository/auth/auth_repository_impl.dart' as _i392;
 import '../../data/repository/brand/brand_repository_impl.dart' as _i829;
 import '../../data/repository/category/category_repository_impl.dart' as _i954;
+import '../../data/repository/product/category_repository_impl.dart' as _i978;
 import '../../domain/repository/auth/auth_repository.dart' as _i912;
 import '../../domain/repository/brand/brand_repository.dart' as _i244;
 import '../../domain/repository/category/category_repository.dart' as _i495;
+import '../../domain/repository/product/product_repository.dart' as _i798;
 import '../../domain/use_cases/get_all_brands_use_case.dart' as _i773;
 import '../../domain/use_cases/get_all_categories_use_case.dart' as _i201;
+import '../../domain/use_cases/get_all_Products_use_case.dart' as _i218;
 import '../../domain/use_cases/login_use_cases.dart' as _i408;
 import '../../domain/use_cases/register_use_cases.dart' as _i724;
 import '../../features/ui/auth/login/cubit/login_view_model.dart' as _i245;
@@ -45,6 +52,8 @@ import '../../features/ui/home_screen/cubit/home_screen_view_model.dart'
     as _i313;
 import '../../features/ui/home_screen/tabs/home_tab/cubit/home_tab_view_model.dart'
     as _i519;
+import '../../features/ui/home_screen/tabs/products_tab/cubit/product_tab_view_model.dart'
+    as _i280;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -58,17 +67,29 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i361.BaseOptions>(() => getItModule.baseOptions);
     gh.singleton<_i528.PrettyDioLogger>(() => getItModule.prettyDioLogger);
     gh.singleton<_i394.ApiServices>(() => getItModule.apiServices);
+    gh.factory<_i1038.ProductRemoteDataSource>(
+      () => _i1055.ProductRemoteDataSourceImpl(gh<_i394.ApiServices>()),
+    );
+    gh.factory<_i798.ProductRepository>(
+      () => _i978.ProductRepositoryImpl(gh<_i1038.ProductRemoteDataSource>()),
+    );
     gh.factory<_i89.CategoryRemoteDataSource>(
       () => _i214.CategoryRemoteDataSourceImpl(gh<_i394.ApiServices>()),
     );
     gh.factory<_i202.AuthRemoteDataSource>(
       () => _i646.AuthRemoteDataSourceImpl(gh<_i394.ApiServices>()),
     );
+    gh.factory<_i218.GetAllProductsUseCase>(
+      () => _i218.GetAllProductsUseCase(gh<_i798.ProductRepository>()),
+    );
     gh.factory<_i912.AuthRepository>(
       () => _i392.AuthRepositoryImpl(gh<_i202.AuthRemoteDataSource>()),
     );
     gh.factory<_i611.BrandRemoteDataSource>(
       () => _i549.BrandRemoteDataSourceImpl(gh<_i394.ApiServices>()),
+    );
+    gh.factory<_i280.ProductTabViewModel>(
+      () => _i280.ProductTabViewModel(gh<_i218.GetAllProductsUseCase>()),
     );
     gh.singleton<_i361.Dio>(
       () => getItModule.provideDio(
@@ -101,7 +122,10 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i245.LoginViewModel(gh<_i408.LoginUseCases>()),
     );
     gh.factory<_i519.HomeTabViewModel>(
-      () => _i519.HomeTabViewModel(gh<_i201.GetAllCategoriesUseCase>()),
+      () => _i519.HomeTabViewModel(
+        gh<_i201.GetAllCategoriesUseCase>(),
+        gh<_i773.GetAllBrandsUseCase>(),
+      ),
     );
     return this;
   }

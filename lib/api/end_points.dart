@@ -5,5 +5,6 @@ class EndPoints {
   static const String  registerApi = 'auth/signup';
   static const String getAllCategoriesApi = 'categories';
   static const String getAllBrandsApi = 'brands';
+  static const String getAllProductsApi = 'products';
 
 }

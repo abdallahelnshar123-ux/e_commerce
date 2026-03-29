@@ -26,11 +26,13 @@ class HomeTab extends StatefulWidget {
 
 class _HomeTabState extends State<HomeTab> {
   HomeTabViewModel viewModel = getIt<HomeTabViewModel>();
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     viewModel.getAllCategories();
+    viewModel.getAllBrands();
   }
 
   @override
@@ -63,11 +65,61 @@ class _HomeTabState extends State<HomeTab> {
                 width: double.infinity,
                 height: (165.h * 2 + 16.w),
                 child: BlocBuilder<HomeTabViewModel, HomeTabStates>(
+                  buildWhen: (previous, current) {
+                    if (current is CategoryErrorState ||
+                        current is CategorySuccessState ||
+                        current is CategoryLoadingState) {
+                      return true;
+                    }
+                    return false;
+                  },
                   bloc: viewModel,
                   builder: (BuildContext context, state) {
                     if (state is CategorySuccessState) {
-                      return builtCategoriesWidget(state.categoriesList);
+                      return builtCategoriesOrBrandsWidget(
+                        state.categoriesList,
+                      );
                     } else if (state is CategoryErrorState) {
+                      return MainErrorWidget(
+                        errorMessage: state.errorMessage,
+                        onPressed: () {
+                          viewModel.getAllCategories();
+                        },
+                      );
+                    }
+                    return MainLoadingWidget();
+                  },
+                ),
+              ),
+              SectionTitleWidget(
+                titleText: 'Brands',
+                viewAllWidget: TextButton(
+                  onPressed: () {},
+                  style: TextButton.styleFrom(
+                    overlayColor: AppColors.transparentColor,
+                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    padding: EdgeInsets.zero,
+                  ),
+                  child: Text('view all', style: AppStyles.regular12TextColor),
+                ),
+              ),
+              SizedBox(
+                width: double.infinity,
+                height: (165.h * 2 + 16.w),
+                child: BlocBuilder<HomeTabViewModel, HomeTabStates>(
+                  buildWhen: (previous, current) {
+                    if (current is BrandSuccessState ||
+                        current is BrandLoadingState ||
+                        current is BrandErrorState) {
+                      return true;
+                    }
+                    return false;
+                  },
+                  bloc: viewModel,
+                  builder: (BuildContext context, state) {
+                    if (state is BrandSuccessState) {
+                      return builtCategoriesOrBrandsWidget(state.brandsList);
+                    } else if (state is BrandErrorState) {
                       return MainErrorWidget(
                         errorMessage: state.errorMessage,
                         onPressed: () {
@@ -161,7 +213,7 @@ Padding builtSlideShow() {
   );
 }
 
-GridView builtCategoriesWidget(List<CategoryOrBrand> categoriesList) {
+GridView builtCategoriesOrBrandsWidget(List<CategoryOrBrand> categoriesList) {
   return GridView.builder(
     padding: EdgeInsets.symmetric(horizontal: 16.w),
     scrollDirection: Axis.horizontal,

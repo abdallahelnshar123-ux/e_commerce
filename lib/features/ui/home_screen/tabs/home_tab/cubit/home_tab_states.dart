@@ -1,14 +1,33 @@
 import 'package:e_commerce/domain/entities/response/common/category_brand.dart';
 
 sealed class HomeTabStates {}
-class HomeTabInitState extends HomeTabStates{}
-class CategoryLoadingState extends HomeTabStates{}
-class CategorySuccessState extends HomeTabStates{
-  List<CategoryOrBrand> categoriesList;
-  CategorySuccessState({required this.categoriesList});
 
+class HomeTabInitState extends HomeTabStates {}
+
+class CategoryLoadingState extends HomeTabStates {}
+
+class CategorySuccessState extends HomeTabStates {
+  List<CategoryOrBrand> categoriesList;
+
+  CategorySuccessState({required this.categoriesList});
 }
-class CategoryErrorState extends HomeTabStates{
+
+class CategoryErrorState extends HomeTabStates {
   String errorMessage;
+
   CategoryErrorState({required this.errorMessage});
+}
+
+class BrandLoadingState extends HomeTabStates {}
+
+class BrandSuccessState extends HomeTabStates {
+  List<CategoryOrBrand> brandsList;
+
+  BrandSuccessState({required this.brandsList});
+}
+
+class BrandErrorState extends HomeTabStates {
+  String errorMessage;
+
+  BrandErrorState({required this.errorMessage});
 }

@@ -1,4 +1,5 @@
 import 'package:e_commerce/core/exceptions/app_exceptions.dart';
+import 'package:e_commerce/domain/use_cases/get_all_brands_use_case.dart';
 import 'package:e_commerce/domain/use_cases/get_all_categories_use_case.dart';
 import 'package:e_commerce/features/ui/home_screen/tabs/home_tab/cubit/home_tab_states.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,8 +8,10 @@ import 'package:injectable/injectable.dart';
 @injectable
 class HomeTabViewModel extends Cubit<HomeTabStates> {
   final GetAllCategoriesUseCase _getAllCategoriesUseCase;
+  final GetAllBrandsUseCase _getAllBrandsUseCase;
 
-  HomeTabViewModel(this._getAllCategoriesUseCase) : super(HomeTabInitState());
+  HomeTabViewModel(this._getAllCategoriesUseCase, this._getAllBrandsUseCase)
+    : super(HomeTabInitState());
 
   void getAllCategories() async {
     try {
@@ -25,6 +28,22 @@ class HomeTabViewModel extends Cubit<HomeTabStates> {
       }
     } on AppException catch (e) {
       emit(CategoryErrorState(errorMessage: e.message));
+    }
+  }
+
+  void getAllBrands() async {
+    try {
+      emit(BrandLoadingState());
+      var brandsList = await _getAllBrandsUseCase.invoke();
+      if (brandsList != null) {
+        emit(BrandSuccessState(brandsList:  brandsList));
+      } else {
+        emit(
+          BrandErrorState(errorMessage: 'Sorry We could not load categories'),
+        );
+      }
+    } on AppException catch (e) {
+      emit(BrandErrorState(errorMessage: e.message));
     }
   }
 }
