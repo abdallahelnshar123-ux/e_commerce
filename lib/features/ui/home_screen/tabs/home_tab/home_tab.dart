@@ -131,7 +131,6 @@ class _HomeTabState extends State<HomeTab> {
                   },
                 ),
               ),
-              SectionTitleWidget(titleText: 'Home Appliance'),
             ],
           ),
         ),
@@ -230,5 +229,3 @@ GridView builtCategoriesOrBrandsWidget(List<CategoryOrBrand> categoriesList) {
     ),
   );
 }
-
-// ListView built
