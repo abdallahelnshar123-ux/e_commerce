@@ -3,10 +3,12 @@ import 'package:e_commerce/core/utils/app_assets.dart';
 import 'package:e_commerce/core/utils/app_colors.dart';
 import 'package:e_commerce/core/utils/app_styles.dart';
 import 'package:e_commerce/domain/entities/response/product/product.dart';
+import 'package:e_commerce/features/ui/widgets/increment_decrement_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 
 import '../widgets/main_loading_widget.dart';
 
@@ -26,10 +28,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
     if (!isInitialized) {
-      product = ModalRoute
-          .of(context)
-          ?.settings
-          .arguments as Product;
+      product = ModalRoute.of(context)?.settings.arguments as Product;
     }
   }
 
@@ -37,28 +36,75 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        actionsPadding: EdgeInsets.all(0.04),
+        actionsPadding: EdgeInsets.only(right: 14.w),
         actions: [
-          builtActionButton(AppAssets.cartIcon),
           builtActionButton(AppAssets.searchIcon),
+          builtActionButton(AppAssets.cartIcon),
         ],
+
         centerTitle: true,
         title: Text('Product Details', style: AppStyles.medium20TextColor),
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(0.04),
+        padding: EdgeInsets.symmetric(horizontal: 16.w),
         child: Column(
-          spacing: 0.005,
+          spacing: 16.h,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            builtSlideShow(product.images?? []),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical:  0.02),
-              child: Text(
-                product.title!,
-                style:AppStyles.medium20TextColor ,
-              ),
+            builtSlideShow(product.images ?? []),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Text(
+                    product.title!,
+                    style: AppStyles.medium18TextColor,
+                  ),
+                ),
+                Text(
+                  formatNumber(product.price ?? 0, true, 'EGP '),
+                  style: AppStyles.medium18TextColor,
+                ),
+              ],
             ),
+            Row(
+              children: [
+                Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 16.w,
+                    vertical: 8.h,
+                  ),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30.r),
+                    border: BoxBorder.all(
+                      color: AppColors.strokeColor,
+                      width: 1,
+                    ),
+                  ),
+                  child: Text(
+                    formatNumber(product.sold ?? 0, false, 'sold'),
+                    style: AppStyles.medium14TextColor,
+                  ),
+                ),
+                SizedBox(width: 10.w,),
+                Row(
+                  spacing: 4.w,
+                  children: [
+                    SvgPicture.asset(AppAssets.starIcon, width: 15.w),
+
+                    Text(
+                      '${product.ratingsAverage} ( ${formatNumber(product.ratingsQuantity ?? 0, false, null)})',
+                      style: AppStyles.regular12TextColor,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
+                Spacer(),
+                IncrementDecrementWidget(),
+              ],
+            ),
+
             // Container(
             //   padding: EdgeInsets.all(context.width * 0.04),
             //   width: double.infinity,
@@ -132,34 +178,18 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
             //     ],
             //   ),
             // ),
-
-            Text(
-              'description',
-              style: Theme
-                  .of(context)
-                  .textTheme
-                  .labelLarge,
-            ),
+            Text('description', style: Theme.of(context).textTheme.labelLarge),
             Container(
-              padding: EdgeInsets.all(context.width * 0.04),
+              padding: EdgeInsets.all(0.04),
               width: double.infinity,
               decoration: BoxDecoration(
-                color: context.isLight
-                    ? AppColors.whiteColor
-                    : AppColors.inputsColor,
-                border: Border.all(
-                  color: context.isLight
-                      ? AppColors.strokeColor
-                      : AppColors.strokeDarkColor,
-                ),
+                color: AppColors.textColor,
+                border: Border.all(color: AppColors.whiteColor),
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Text(
-                event.eventDescription,
-                style: Theme
-                    .of(context)
-                    .textTheme
-                    .labelSmall,
+                product.description ?? 'no description',
+                style: Theme.of(context).textTheme.labelSmall,
               ),
             ),
           ],
@@ -169,39 +199,59 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   }
 
   Widget builtActionButton(String icon) {
-    return SvgPicture.asset(
-      icon,
-      width: 24.w,
-      colorFilter: ColorFilter.mode(AppColors.mainColor, BlendMode.srcIn),
+    return IconButton(
+      padding: EdgeInsets.zero,
+      onPressed: () {},
+      icon: SvgPicture.asset(
+        icon,
+        width: 24.w,
+        colorFilter: ColorFilter.mode(AppColors.mainColor, BlendMode.srcIn),
+      ),
     );
   }
 
-  Padding builtSlideShow(List<String> imagesList) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16.w),
-      child: ClipRRect(
-        clipBehavior: Clip.antiAlias,
-        borderRadius: BorderRadius.circular(16.r),
-        child: ImageSlideshow(
-          indicatorBackgroundColor: AppColors.whiteColor,
-          indicatorRadius: 5.r,
-          autoPlayInterval: 5000,
-          width: double.infinity,
-          height: 200.h,
-          indicatorColor: AppColors.mainColor,
-          initialPage: 0,
-          children: imagesList.map((imageUrl) =>
-              CachedNetworkImage(
+  Widget builtSlideShow(List<String> imagesList) {
+    return ClipRRect(
+      clipBehavior: Clip.antiAlias,
+      borderRadius: BorderRadius.circular(16.r),
+      child: ImageSlideshow(
+        indicatorBackgroundColor: AppColors.whiteColor,
+        indicatorRadius: 5.r,
+        width: double.infinity,
+        height: 300.h,
+        indicatorColor: AppColors.mainColor,
+        initialPage: 0,
+        children: imagesList
+            .map(
+              (imageUrl) => CachedNetworkImage(
                 width: double.infinity,
                 height: 128.h,
                 fit: BoxFit.cover,
                 imageUrl: imageUrl,
                 placeholder: (context, url) => MainLoadingWidget(),
                 errorWidget: (context, url, error) => Icon(Icons.error),
-              ),).toList(),
-        ),
+              ),
+            )
+            .toList(),
       ),
     );
   }
 
+  String formatNumber(num number, bool isPrice, String? symbol) {
+    final priceFormatter = NumberFormat.currency(
+      locale: 'en',
+      symbol: symbol ?? '',
+      decimalDigits: 0,
+    );
+
+    final numFormatter = NumberFormat.currency(
+      locale: 'ar',
+      symbol: symbol ?? '',
+      decimalDigits: 0,
+    );
+
+    return isPrice
+        ? priceFormatter.format(number)
+        : numFormatter.format(number);
+  }
 }
