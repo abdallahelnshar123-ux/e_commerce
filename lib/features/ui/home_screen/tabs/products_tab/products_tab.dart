@@ -1,3 +1,4 @@
+import 'package:e_commerce/core/utils/app_routes.dart';
 import 'package:e_commerce/features/ui/home_screen/tabs/products_tab/cubit/product_tab_states.dart';
 import 'package:e_commerce/features/ui/home_screen/tabs/products_tab/widget/product_item.dart';
 import 'package:flutter/material.dart';
@@ -52,14 +53,6 @@ class _ProductsTabState extends State<ProductsTab> {
             return MainLoadingWidget();
           },
         ),
-
-        // SingleChildScrollView(
-        //   child: Column(
-        //     spacing: 16.h,
-        //     crossAxisAlignment: CrossAxisAlignment.start,
-        //     children: [],
-        //   ),
-        // ),
       ),
     );
   }
@@ -113,17 +106,22 @@ class _ProductsTabState extends State<ProductsTab> {
 
   GridView builtProductsWidget(List<Product> productsList) {
     return GridView.builder(
-      padding: EdgeInsets.symmetric(horizontal: 16.w , vertical: 24.h),
+      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 24.h),
 
       itemCount: productsList.length,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        childAspectRatio:191.w/ 270.h ,
+        childAspectRatio: 191.w / 270.h,
         mainAxisSpacing: 16.w,
         crossAxisSpacing: 16.w,
       ),
-      itemBuilder: (context, index) => ProductItem(
-        product: productsList[index],
+      itemBuilder: (context, index) => InkWell(
+        onTap: () => Navigator.pushNamed(
+          context,
+          AppRoutes.productDetailsRouteName,
+          arguments: productsList[index],
+        ),
+        child: ProductItem(product: productsList[index]),
       ),
     );
   }

@@ -4,6 +4,7 @@ import 'package:e_commerce/core/utils/app_theme.dart';
 import 'package:e_commerce/features/ui/auth/login/login_screen.dart';
 import 'package:e_commerce/features/ui/auth/register/register_screen.dart';
 import 'package:e_commerce/features/ui/home_screen/home_screen.dart';
+import 'package:e_commerce/features/ui/product_details_screen/product_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -30,14 +31,14 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           initialRoute: AppRoutes.homeRouteName,
           routes: {
-            AppRoutes.loginRouteName : (context) => LoginScreen(),
-            AppRoutes.registerRouteName : (context) => RegisterScreen(),
-            AppRoutes.homeRouteName : (context) => HomeScreen(),
-
+            AppRoutes.loginRouteName: (context) => LoginScreen(),
+            AppRoutes.registerRouteName: (context) => RegisterScreen(),
+            AppRoutes.homeRouteName: (context) => HomeScreen(),
+            AppRoutes.productDetailsRouteName: (context) =>
+                ProductDetailsScreen(),
           },
-          theme: AppTheme.lightTheme ,
+          theme: AppTheme.lightTheme,
           themeMode: ThemeMode.light,
-
         );
       },
     );
