@@ -65,7 +65,7 @@ class AppStyles {
   );
   static TextStyle regular12TextColor = GoogleFonts.poppins(
     fontWeight: FontWeight.w400,
-    fontSize: 12,
+    fontSize: 12.sp,
     color: AppColors.textColor,
   );
 }

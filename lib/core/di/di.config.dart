@@ -42,7 +42,7 @@ import '../../domain/repository/category/category_repository.dart' as _i495;
 import '../../domain/repository/product/product_repository.dart' as _i798;
 import '../../domain/use_cases/get_all_brands_use_case.dart' as _i773;
 import '../../domain/use_cases/get_all_categories_use_case.dart' as _i201;
-import '../../domain/use_cases/get_all_Products_use_case.dart' as _i218;
+import '../../domain/use_cases/get_all_products_use_case.dart' as _i218;
 import '../../domain/use_cases/login_use_cases.dart' as _i408;
 import '../../domain/use_cases/register_use_cases.dart' as _i724;
 import '../../features/ui/auth/login/cubit/login_view_model.dart' as _i245;

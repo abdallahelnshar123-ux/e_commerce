@@ -4,16 +4,15 @@ import '../../../core/utils/app_colors.dart';
 
 
 class CustomElevatedButton extends StatelessWidget {
-  Color backGroundColor;
-  Color? borderSideColor;
-  Widget child;
-  void Function() onPressed;
-  CustomElevatedButton({super.key,required this.child,required this.backGroundColor,this.borderSideColor,required this.onPressed});
+ final Color backGroundColor;
+  final Color? borderSideColor;
+  final Widget child;
+  final void Function() onPressed;
+  const CustomElevatedButton({super.key,required this.child,required this.backGroundColor,this.borderSideColor,required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
-    var width = MediaQuery.of(context).size.width;
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
             minimumSize: Size(double.infinity, 0),

@@ -118,7 +118,7 @@ class _ProductsTabState extends State<ProductsTab> {
       itemCount: productsList.length,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        childAspectRatio:191.w/ 237.h ,
+        childAspectRatio:191.w/ 270.h ,
         mainAxisSpacing: 16.w,
         crossAxisSpacing: 16.w,
       ),

@@ -1,11 +1,8 @@
-import 'dart:math';
 
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:e_commerce/core/exceptions/app_exceptions.dart';
-import 'package:e_commerce/domain/entities/request/login/login_request.dart';
 import 'package:e_commerce/domain/entities/request/register/register_request.dart';
-import 'package:e_commerce/domain/use_cases/login_use_cases.dart';
 import 'package:e_commerce/domain/use_cases/register_use_cases.dart';
 import 'package:e_commerce/features/ui/auth/auth_states.dart';
 import 'package:injectable/injectable.dart';
