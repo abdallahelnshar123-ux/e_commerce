@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 class AppTheme {
 
   static final ThemeData lightTheme  = ThemeData(
+    dialogTheme: DialogThemeData(
+      backgroundColor: AppColors.whiteColor
+    ),
     appBarTheme: AppBarThemeData(
       backgroundColor: AppColors.whiteColor
     ),

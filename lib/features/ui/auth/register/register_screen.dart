@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../widgets/already_or_donot_have_account_widget.dart';
 import '../../widgets/custom_elevated_button.dart';
 import '../../widgets/custom_text_form_field.dart';
 
@@ -88,6 +89,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   Text('Full Name', style: AppStyles.medium18White),
                   SizedBox(height: 10.h),
                   CustomTextFormField(
+                    contentPadding: 15.h,
+                    borderRadius: 16.r,
                     validator: (text) {
                       if (text?.trim().isEmpty ?? true) {
                         return 'please_enter_email';
@@ -105,6 +108,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   Text('Phone', style: AppStyles.medium18White),
                   SizedBox(height: 10.h),
                   CustomTextFormField(
+                    contentPadding: 15.h,
+                    borderRadius: 16.r,
                     validator: (text) {
                       if (text?.trim().isEmpty ?? true) {
                         return 'please_enter_email';
@@ -122,6 +127,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   Text('Email', style: AppStyles.medium18White),
                   SizedBox(height: 10.h),
                   CustomTextFormField(
+                    contentPadding: 15.h,
+                    borderRadius: 16.r,
                     validator: (text) {
                       if (text?.trim().isEmpty ?? true) {
                         return 'please_enter_email';
@@ -145,6 +152,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   Text('Password', style: AppStyles.medium18White),
                   SizedBox(height: 10.h),
                   CustomTextFormField(
+                    contentPadding: 15.h,
+                    borderRadius: 16.r,
                     validator: (text) {
                       if (text?.trim().isEmpty ?? true) {
                         return 'please_enter_password';
@@ -181,6 +190,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   Text('Confirm Password', style: AppStyles.medium18White),
                   SizedBox(height: 10.h),
                   CustomTextFormField(
+                    contentPadding: 15.h,
+                    borderRadius: 16.r,
                     validator: (text) {
                       if (text?.trim().isEmpty ?? true) {
                         return 'please_confirm_password';
@@ -216,8 +227,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   SizedBox(height: 55.h),
 
                   CustomElevatedButton(
+                    borderRadius: 16.r,
                     width: double.infinity,
-                    verticalPadding: 23.h,
+                    verticalPadding: 15.h,
                     backGroundColor: AppColors.whiteColor,
                     onPressed: () {
                       if (formKey.currentState?.validate() == true) {
@@ -233,6 +245,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     child: Text("Sign up", style: AppStyles.sBold20MainColor),
                   ),
                   SizedBox(height: 32.h),
+                  AlreadyOrDoNotHaveAccountWidget(
+                    plainText: "Already have an account? ",
+                    clickableText: "Sign in",
+                    onTextClick: () {
+                      Navigator.pushReplacementNamed(
+                        context,
+                        AppRoutes.loginRouteName,
+                      );
+                    },
+                  ),
+                  SizedBox(height: 32.h),
+
                 ],
               ),
             ),

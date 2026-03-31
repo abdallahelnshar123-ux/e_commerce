@@ -5,6 +5,8 @@ import 'package:e_commerce/core/utils/app_styles.dart';
 import 'package:e_commerce/core/utils/dialog_utils.dart';
 import 'package:e_commerce/features/ui/auth/auth_states.dart';
 import 'package:e_commerce/features/ui/auth/login/cubit/login_view_model.dart';
+import 'package:e_commerce/features/ui/widgets/already_or_donot_have_account_widget.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -41,6 +43,9 @@ class _LoginScreenState extends State<LoginScreen> {
             message: 'Login Successfully',
             title: 'Success',
             posActionText: 'ok',
+            posAction: () {
+              Navigator.pushReplacementNamed(context, AppRoutes.homeRouteName);
+            },
           );
         } else if (state is AuthErrorState) {
           DialogUtils.hideLoading(context: context);
@@ -81,10 +86,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   Text('Email', style: AppStyles.medium18White),
                   SizedBox(height: 10.h),
                   CustomTextFormField(
+                    contentPadding: 15.h,
+                    borderRadius: 16.r,
                     validator: (text) {
-                      if (text
-                          ?.trim()
-                          .isEmpty ?? true) {
+                      if (text?.trim().isEmpty ?? true) {
                         return 'please_enter_email';
                       }
                       final bool emailValid = RegExp(
@@ -107,10 +112,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   Text('Password', style: AppStyles.medium18White),
                   SizedBox(height: 10.h),
                   CustomTextFormField(
+                    contentPadding: 15.h,
+                    borderRadius: 16.r,
                     validator: (text) {
-                      if (text
-                          ?.trim()
-                          .isEmpty ?? true) {
+                      if (text?.trim().isEmpty ?? true) {
                         return 'please_enter_password';
                       }
                       if (text!.length < 6) {
@@ -164,49 +169,31 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(height: 55.h),
 
                   CustomElevatedButton(
+                    borderRadius: 16.r,
                     width: double.infinity,
-                    verticalPadding: 23.h,
+                    verticalPadding: 15.h,
                     backGroundColor: AppColors.whiteColor,
                     onPressed: () {
                       if (formKey.currentState?.validate() == true) {
-                        viewModel.login(email: emailController.text,
-                            password: passwordController.text);
+                        viewModel.login(
+                          email: emailController.text,
+                          password: passwordController.text,
+                        );
                       }
                     },
                     child: Text("login", style: AppStyles.sBold20MainColor),
                   ),
                   SizedBox(height: 32.h),
 
-                  FittedBox(
-                    fit: BoxFit.scaleDown,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Don’t have an account? ",
-                          style: AppStyles.medium18White,
-                        ),
-                        TextButton(
-                          style: TextButton.styleFrom(
-                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                            padding: EdgeInsets.zero,
-                          ),
-                          onPressed: () {
-                            //todo Navigate to Register Screen
-                            Navigator.pushReplacementNamed(
-                              context,
-                              AppRoutes.registerRouteName,
-                            );
-
-
-                          },
-                          child: Text(
-                            "Create Account",
-                            style: AppStyles.medium18White,
-                          ),
-                        ),
-                      ],
-                    ),
+                  AlreadyOrDoNotHaveAccountWidget(
+                    plainText: "Don’t have an account? ",
+                    clickableText: "Create Account",
+                    onTextClick: () {
+                      Navigator.pushReplacementNamed(
+                        context,
+                        AppRoutes.registerRouteName,
+                      );
+                    },
                   ),
                   SizedBox(height: 32.h),
                 ],

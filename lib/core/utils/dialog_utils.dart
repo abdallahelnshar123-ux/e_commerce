@@ -15,7 +15,7 @@ class DialogUtils {
           spacing: 20,
           children: [
             CircularProgressIndicator(color: AppColors.mainColor),
-            Text('loading', style: AppStyles.light16White),
+            Text('loading', style: AppStyles.medium16MainColor),
           ],
         ),
       ),
@@ -43,10 +43,7 @@ class DialogUtils {
             Navigator.pop(context);
             posAction?.call();
           },
-          child: Text(
-            posActionText,
-            style:AppStyles.light16White,
-          ),
+          child: Text(posActionText, style: AppStyles.medium16MainColor),
         ),
       );
     }
@@ -57,10 +54,7 @@ class DialogUtils {
             Navigator.pop(context);
             negAction?.call();
           },
-          child: Text(
-            negActionText,
-            style: AppStyles.light16White,
-          ),
+          child: Text(negActionText, style: AppStyles.medium16MainColor),
         ),
       );
     }
@@ -69,11 +63,8 @@ class DialogUtils {
       context: context,
       builder: (context) => AlertDialog(
         contentPadding: EdgeInsets.all(20),
-        content: Text(
-          message,
-          style: AppStyles.light16White,
-        ),
-        title: Text(title, style: AppStyles.light16White),
+        content: Text(message, style: AppStyles.medium16MainColor),
+        title: Text(title, style: AppStyles.medium16MainColor),
         actions: actions,
       ),
     );
@@ -95,17 +86,11 @@ class DialogUtils {
       builder: (context) {
         return AlertDialog(
           contentPadding: const EdgeInsets.all(20),
-          title: Text(
-            title,
-            style: AppStyles.light16White,
-          ),
+          title: Text(title, style: AppStyles.medium16MainColor),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
-                message,
-                style: AppStyles.light16White,
-              ),
+              Text(message, style: AppStyles.medium16MainColor),
               const SizedBox(height: 15),
               TextField(
                 controller: passwordController,
@@ -121,19 +106,13 @@ class DialogUtils {
               onPressed: () {
                 Navigator.pop(context); // يرجع null
               },
-              child: Text(
-                cancelText,
-                style: AppStyles.light16White,
-              ),
+              child: Text(cancelText, style: AppStyles.medium16MainColor),
             ),
             TextButton(
               onPressed: () {
                 Navigator.pop(context, passwordController.text.trim());
               },
-              child: Text(
-                confirmText,
-                style: AppStyles.light16White,
-              ),
+              child: Text(confirmText, style: AppStyles.medium16MainColor),
             ),
           ],
         );

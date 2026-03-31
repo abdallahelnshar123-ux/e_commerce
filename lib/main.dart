@@ -8,17 +8,23 @@ import 'package:e_commerce/features/ui/product_details_screen/product_details_sc
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import 'core/cache/shared_prefs_utils.dart';
 import 'core/di/di.dart';
 import 'core/utils/app_routes.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await SharedPrefsUtils.init();
+  var token = SharedPrefsUtils.getData(key: ShredPrefsKeys.tokenKey);
   configureDependencies();
   Bloc.observer = MyBlocObserver();
-  runApp(const MyApp());
+  runApp(MyApp(token: token));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final Object? token;
+
+  const MyApp({super.key, required this.token});
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +35,9 @@ class MyApp extends StatelessWidget {
       builder: (context, child) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          initialRoute: AppRoutes.homeRouteName,
+          initialRoute: token == null
+              ? AppRoutes.loginRouteName
+              : AppRoutes.homeRouteName,
           routes: {
             AppRoutes.loginRouteName: (context) => LoginScreen(),
             AppRoutes.registerRouteName: (context) => RegisterScreen(),

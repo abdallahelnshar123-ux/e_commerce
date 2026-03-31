@@ -8,6 +8,8 @@ import 'package:e_commerce/domain/entities/request/register/register_request.dar
 import 'package:e_commerce/domain/entities/response/auth/auth_response.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../../../core/cache/shared_prefs_utils.dart';
+
 @Injectable(as: AuthRemoteDataSource)
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   final ApiServices _apiServices;
@@ -18,6 +20,10 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   Future<AuthResponse> login(LoginRequest loginRequest) async {
     var authResponse = await _apiServices.login(
       loginRequest.toLoginRequestDto(),
+    );
+    await SharedPrefsUtils.saveData(
+      key: ShredPrefsKeys.tokenKey,
+      value: authResponse.token,
     );
     return authResponse.toAuthResponse();
   }
