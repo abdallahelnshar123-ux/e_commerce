@@ -164,6 +164,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(height: 55.h),
 
                   CustomElevatedButton(
+                    width: double.infinity,
+                    verticalPadding: 23.h,
                     backGroundColor: AppColors.whiteColor,
                     onPressed: () {
                       if (formKey.currentState?.validate() == true) {
