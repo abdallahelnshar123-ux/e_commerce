@@ -1,11 +1,15 @@
+import 'package:badges/badges.dart' as badges;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_commerce/core/utils/app_assets.dart';
 import 'package:e_commerce/core/utils/app_colors.dart';
 import 'package:e_commerce/core/utils/app_styles.dart';
 import 'package:e_commerce/domain/entities/response/product/product.dart';
+import 'package:e_commerce/features/ui/product_details_screen/cubit/cart_view_model.dart';
+import 'package:e_commerce/features/ui/widgets/cart_icon.dart';
 import 'package:e_commerce/features/ui/widgets/custom_elevated_button.dart';
 import 'package:e_commerce/features/ui/widgets/increment_decrement_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -40,7 +44,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         actionsPadding: EdgeInsets.only(right: 14.w),
         actions: [
           builtActionButton(AppAssets.searchIcon),
-          builtActionButton(AppAssets.cartIcon),
+          CartIcon(icon: builtActionButton(AppAssets.cartIcon)),
         ],
 
         centerTitle: true,
@@ -133,7 +137,13 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 spacing: 40.w,
                 children: [
                   totalPriceWidget(),
-                  Expanded(child: addToCartButton()),
+                  Expanded(
+                    child: addToCartButton(() {
+                      context.read<CartViewModel>().addProductToCart(
+                        product.id!,
+                      );
+                    }),
+                  ),
                 ],
               ),
             ),
@@ -213,11 +223,13 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     );
   }
 
-  Widget addToCartButton() {
+  Widget addToCartButton(VoidCallback onPressed) {
     return CustomElevatedButton(
       borderRadius: 20.r,
       backGroundColor: AppColors.mainColor,
-      onPressed: () {},
+      onPressed: () {
+        onPressed();
+      },
       width: double.infinity,
       verticalPadding: 12.h,
       horizontalPadding: 32.w,

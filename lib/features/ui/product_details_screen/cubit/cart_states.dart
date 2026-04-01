@@ -4,7 +4,7 @@ sealed class ProductDetailsStates {}
 
 class AddToCartLoadingState extends ProductDetailsStates {}
 
-class ProductDetailsInitState extends ProductDetailsStates {}
+class CartInitState extends ProductDetailsStates {}
 
 class AddToCartSuccessState extends ProductDetailsStates {
   final AddToCartResponse cartResponse;

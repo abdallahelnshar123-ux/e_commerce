@@ -1,20 +1,21 @@
 import 'package:bloc/bloc.dart';
 import 'package:e_commerce/core/exceptions/app_exceptions.dart';
 import 'package:e_commerce/domain/use_cases/add_to_cart_use_case.dart';
-import 'package:e_commerce/features/ui/product_details_screen/cubit/product_details_states.dart';
+import 'package:e_commerce/features/ui/product_details_screen/cubit/cart_states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-class ProductDetailsViewModel extends Cubit<ProductDetailsStates> {
+import 'package:injectable/injectable.dart';
+@injectable
+class CartViewModel extends Cubit<ProductDetailsStates> {
   final AddToCartUseCase _addToCartUseCase;
 
-  ProductDetailsViewModel(this._addToCartUseCase)
-    : super(ProductDetailsInitState());
+  CartViewModel(this._addToCartUseCase)
+    : super(CartInitState());
 
   int numOfCartItems = 0;
 
-  static ProductDetailsViewModel get(BuildContext context) =>
-      BlocProvider.of<ProductDetailsViewModel>(context);
+  static CartViewModel get(BuildContext context) =>
+      BlocProvider.of<CartViewModel>(context);
 
   void addProductToCart(String productId) async {
     try {

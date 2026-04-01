@@ -1,6 +1,7 @@
 import 'package:e_commerce/core/utils/app_routes.dart';
 import 'package:e_commerce/features/ui/home_screen/tabs/products_tab/cubit/product_tab_states.dart';
 import 'package:e_commerce/features/ui/home_screen/tabs/products_tab/widget/product_item.dart';
+import 'package:e_commerce/features/ui/widgets/cart_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -88,14 +89,7 @@ class _ProductsTabState extends State<ProductsTab> {
                     borderSideColor: AppColors.mainColor,
                   ),
                 ),
-                SvgPicture.asset(
-                  width: 24.w,
-                  AppAssets.cartIcon,
-                  colorFilter: ColorFilter.mode(
-                    AppColors.mainColor,
-                    BlendMode.srcIn,
-                  ),
-                ),
+                CartIcon(),
               ],
             ),
           ],

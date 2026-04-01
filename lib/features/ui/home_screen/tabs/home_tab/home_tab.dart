@@ -8,6 +8,7 @@ import 'package:e_commerce/features/ui/home_screen/tabs/home_tab/cubit/home_tab_
 import 'package:e_commerce/features/ui/home_screen/tabs/home_tab/widget/category_item.dart';
 import 'package:e_commerce/features/ui/home_screen/tabs/home_tab/widget/section_title_widget.dart';
 import 'package:e_commerce/features/ui/home_screen/tabs/home_tab/widget/slide_show_item.dart';
+import 'package:e_commerce/features/ui/widgets/cart_icon.dart';
 import 'package:e_commerce/features/ui/widgets/custom_text_form_field.dart';
 import 'package:e_commerce/features/ui/widgets/main_error_widget.dart';
 import 'package:e_commerce/features/ui/widgets/main_loading_widget.dart';
@@ -170,14 +171,7 @@ PreferredSizeWidget builtAppBar() {
                   borderSideColor: AppColors.mainColor,
                 ),
               ),
-              SvgPicture.asset(
-                width: 24.w,
-                AppAssets.cartIcon,
-                colorFilter: ColorFilter.mode(
-                  AppColors.mainColor,
-                  BlendMode.srcIn,
-                ),
-              ),
+              CartIcon(),
             ],
           ),
         ],
