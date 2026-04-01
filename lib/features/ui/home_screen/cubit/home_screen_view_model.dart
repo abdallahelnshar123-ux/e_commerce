@@ -18,7 +18,7 @@ class HomeScreenViewModel extends Cubit<HomeScreenStates>{
     UserTab(),
   ];
 
-   int selectedTabIndex = 1;
+   int selectedTabIndex = 3;
   void changeIndex(int index){
     if(selectedTabIndex != index){
       selectedTabIndex = index;
