@@ -1,4 +1,6 @@
 import 'package:e_commerce/core/utils/app_routes.dart';
+import 'package:e_commerce/features/ui/cart_screen/cubit/cart_states.dart';
+import 'package:e_commerce/features/ui/cart_screen/cubit/cart_view_model.dart';
 import 'package:e_commerce/features/ui/home_screen/tabs/products_tab/cubit/product_tab_states.dart';
 import 'package:e_commerce/features/ui/home_screen/tabs/products_tab/widget/product_item.dart';
 import 'package:e_commerce/features/ui/widgets/cart_icon.dart';
@@ -11,6 +13,7 @@ import '../../../../../core/di/di.dart';
 import '../../../../../core/utils/app_assets.dart';
 import '../../../../../core/utils/app_colors.dart';
 import '../../../../../core/utils/app_styles.dart';
+import '../../../../../core/utils/toast_utils.dart';
 import '../../../../../domain/entities/response/product/product.dart';
 import '../../../widgets/custom_text_form_field.dart';
 import '../../../widgets/main_error_widget.dart';
@@ -38,21 +41,39 @@ class _ProductsTabState extends State<ProductsTab> {
     return SafeArea(
       child: Scaffold(
         appBar: builtAppBar(),
-        body: BlocBuilder<ProductTabViewModel, ProductTabStates>(
-          bloc: viewModel,
-          builder: (BuildContext context, state) {
-            if (state is ProductSuccessState) {
-              return builtProductsWidget(state.productsList!);
-            } else if (state is ProductErrorState) {
-              return MainErrorWidget(
-                errorMessage: state.errorMessage,
-                onPressed: () {
-                  viewModel.getAllProducts();
-                },
+        body: BlocListener<CartViewModel, CartStates>(
+          listener: (BuildContext context, state) {
+            if (state is AddToCartSuccessState) {
+              ToastUtils.showMessage(
+                backgroundColor: Colors.green,
+                textColor: AppColors.whiteColor,
+                message: 'Product Added successfully',
               );
             }
-            return MainLoadingWidget();
+            if (state is AddToCartErrorState) {
+              ToastUtils.showMessage(
+                backgroundColor: Colors.red,
+                textColor: AppColors.whiteColor,
+                message: state.errorMessage,
+              );
+            }
           },
+          child: BlocBuilder<ProductTabViewModel, ProductTabStates>(
+            bloc: viewModel,
+            builder: (BuildContext context, state) {
+              if (state is ProductSuccessState) {
+                return builtProductsWidget(state.productsList!);
+              } else if (state is ProductErrorState) {
+                return MainErrorWidget(
+                  errorMessage: state.errorMessage,
+                  onPressed: () {
+                    viewModel.getAllProducts();
+                  },
+                );
+              }
+              return MainLoadingWidget();
+            },
+          ),
         ),
       ),
     );

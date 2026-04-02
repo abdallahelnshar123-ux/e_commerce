@@ -1,10 +1,8 @@
-import 'package:badges/badges.dart' as badges;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_commerce/core/utils/app_assets.dart';
 import 'package:e_commerce/core/utils/app_colors.dart';
 import 'package:e_commerce/core/utils/app_styles.dart';
 import 'package:e_commerce/domain/entities/response/product/product.dart';
-import 'package:e_commerce/features/ui/product_details_screen/cubit/cart_view_model.dart';
 import 'package:e_commerce/features/ui/widgets/cart_icon.dart';
 import 'package:e_commerce/features/ui/widgets/custom_elevated_button.dart';
 import 'package:e_commerce/features/ui/widgets/increment_decrement_widget.dart';
@@ -16,6 +14,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:readmore/readmore.dart';
 
+import '../cart_screen/cubit/cart_view_model.dart';
 import '../widgets/main_loading_widget.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
@@ -44,7 +43,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         actionsPadding: EdgeInsets.only(right: 14.w),
         actions: [
           builtActionButton(AppAssets.searchIcon),
-          CartIcon(icon: builtActionButton(AppAssets.cartIcon)),
+          CartIcon(),
         ],
 
         centerTitle: true,

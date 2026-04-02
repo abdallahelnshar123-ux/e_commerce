@@ -5,10 +5,12 @@ import 'package:e_commerce/core/utils/app_styles.dart';
 import 'package:e_commerce/domain/entities/response/product/product.dart';
 import 'package:e_commerce/features/ui/widgets/favourite_icon.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../cart_screen/cubit/cart_view_model.dart';
 import '../../../../widgets/main_loading_widget.dart';
 
 class ProductItem extends StatelessWidget {
@@ -32,7 +34,6 @@ class ProductItem extends StatelessWidget {
       ),
       child: Stack(
         alignment: AlignmentDirectional.centerEnd,
-
         children: [
           Column(
             mainAxisSize: MainAxisSize.max,
@@ -101,7 +102,9 @@ class ProductItem extends StatelessWidget {
                 IconButton(
                   iconSize: 30.w,
                   padding: EdgeInsets.zero,
-                  onPressed: () {},
+                  onPressed: () {
+                    context.read<CartViewModel>().addProductToCart(product.id!);
+                  },
                   icon: Icon(
                     Icons.add_circle_rounded,
                     color: AppColors.mainColor,

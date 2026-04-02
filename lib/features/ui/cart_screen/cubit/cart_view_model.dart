@@ -1,16 +1,16 @@
-import 'package:bloc/bloc.dart';
 import 'package:e_commerce/core/exceptions/app_exceptions.dart';
 import 'package:e_commerce/domain/use_cases/add_to_cart_use_case.dart';
-import 'package:e_commerce/features/ui/product_details_screen/cubit/cart_states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+
+import 'cart_states.dart';
+
 @injectable
-class CartViewModel extends Cubit<ProductDetailsStates> {
+class CartViewModel extends Cubit<CartStates> {
   final AddToCartUseCase _addToCartUseCase;
 
-  CartViewModel(this._addToCartUseCase)
-    : super(CartInitState());
+  CartViewModel(this._addToCartUseCase) : super(CartInitState());
 
   int numOfCartItems = 0;
 

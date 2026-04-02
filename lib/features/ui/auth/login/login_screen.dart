@@ -6,7 +6,6 @@ import 'package:e_commerce/core/utils/dialog_utils.dart';
 import 'package:e_commerce/features/ui/auth/auth_states.dart';
 import 'package:e_commerce/features/ui/auth/login/cubit/login_view_model.dart';
 import 'package:e_commerce/features/ui/widgets/already_or_donot_have_account_widget.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
