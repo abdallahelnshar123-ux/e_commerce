@@ -20,6 +20,8 @@ class AppAssets {
   static const String addToCartIcon = 'assets/icons/add_to_cart_icon.svg';
   static const String searchIcon = 'assets/icons/search_icon.svg';
   static const String starIcon = 'assets/icons/star_icon.svg';
+  static const String deleteIcon = 'assets/icons/delete_icon.svg';
+  static const String arrowRightIcon = 'assets/icons/arrow_right_icon.svg';
 
 
 

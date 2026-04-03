@@ -8,6 +8,7 @@ import '../../../core/utils/app_assets.dart';
 import '../../../core/utils/app_colors.dart';
 import '../../../core/utils/app_styles.dart';
 import '../widgets/cart_icon.dart';
+import '../widgets/custom_elevated_button.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
@@ -20,23 +21,24 @@ class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: builtCheckOutWidget(() {}),
       appBar: AppBar(
         actionsPadding: EdgeInsets.only(right: 14.w),
-        actions: [
-          builtActionButton(AppAssets.searchIcon),
-          CartIcon(),
-        ],
+        actions: [builtActionButton(AppAssets.searchIcon), CartIcon()],
 
         centerTitle: true,
         title: Text('Cart', style: AppStyles.medium20TextColor),
       ),
-      body:builtCartItemsList() ,
+      body: builtCartItemsList(),
     );
   }
 
   Widget builtActionButton(String icon) {
     return IconButton(
       padding: EdgeInsets.zero,
+      style: IconButton.styleFrom(
+        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+      ),
       onPressed: () {},
       icon: SvgPicture.asset(
         icon,
@@ -52,14 +54,9 @@ class _CartScreenState extends State<CartScreen> {
       itemCount: 10,
       itemBuilder: (context, index) => CartItem(),
       separatorBuilder: (BuildContext context, int index) =>
-          SizedBox(
-            height: 16.w,
-          ),
-
-
+          SizedBox(height: 16.w),
     );
   }
-
 
   String formatNumber(num number, bool isPrice, String? symbol) {
     final priceFormatter = NumberFormat.currency(
@@ -79,16 +76,56 @@ class _CartScreenState extends State<CartScreen> {
         : numFormatter.format(number);
   }
 
-  Widget totalPriceWidget() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text('Total price', style: AppStyles.medium18DescriptionColor),
-        Text(
-          formatNumber(5234, true, 'EGP '),
-          style: AppStyles.medium18TextColor,
-        ),
-      ],
+  Widget builtCheckOutWidget(VoidCallback onPressed) {
+    return Padding(
+      padding: EdgeInsets.fromLTRB(16.w, 10.h, 16.w, 50.h),
+      child: Row(
+        spacing: 25.w,
+        children: [
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Total price', style: AppStyles.medium18DescriptionColor),
+              Text(
+                formatNumber(5234, true, 'EGP '),
+                style: AppStyles.medium18TextColor,
+              ),
+            ],
+          ),
+          Expanded(
+            child: CustomElevatedButton(
+              borderRadius: 20.r,
+              backGroundColor: AppColors.mainColor,
+              onPressed: () {
+                onPressed();
+              },
+              width: double.infinity,
+              verticalPadding: 12.h,
+              horizontalPadding: 32.w,
+              child: Row(
+                spacing: 30.w,
+                children: [
+                  Flexible(
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Text('Check Out', style: AppStyles.medium18White),
+                    ),
+                  ),
+                  SvgPicture.asset(
+                    width: 24.w,
+                    AppAssets.arrowRightIcon,
+                    colorFilter: ColorFilter.mode(
+                      AppColors.whiteColor,
+                      BlendMode.srcIn,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
