@@ -5,7 +5,8 @@ import '../../../core/utils/app_colors.dart';
 import '../../../core/utils/app_styles.dart';
 
 class IncrementDecrementWidget extends StatelessWidget {
-  const IncrementDecrementWidget({super.key});
+  final int count;
+  const IncrementDecrementWidget({super.key , required this.count});
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +31,7 @@ class IncrementDecrementWidget extends StatelessWidget {
               color: AppColors.whiteColor,
             ),
           ),
-          Text('30', style: AppStyles.light16White),
+          Text(count.toString(), style: AppStyles.light16White),
           IconButton(
             style: IconButton.styleFrom(
               tapTargetSize: MaterialTapTargetSize.shrinkWrap,

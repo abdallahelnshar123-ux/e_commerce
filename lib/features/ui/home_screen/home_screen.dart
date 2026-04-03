@@ -1,4 +1,5 @@
 import 'package:e_commerce/core/di/di.dart';
+import 'package:e_commerce/features/ui/cart_screen/cubit/cart_view_model.dart';
 import 'package:e_commerce/features/ui/home_screen/cubit/home_screen_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,57 +9,66 @@ import 'package:flutter_svg/svg.dart';
 import '../../../core/utils/app_assets.dart';
 import '../../../core/utils/app_colors.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   HomeScreen({super.key});
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   final HomeScreenViewModel viewModel = getIt<HomeScreenViewModel>();
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<CartViewModel>().getCartItems();
+  }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder(
       bloc: viewModel,
       builder: (BuildContext context, state) {
-      return Scaffold(
-        extendBody: true,
-        body: viewModel.tabsList[viewModel.selectedTabIndex],
-        bottomNavigationBar: ClipRRect(
-          borderRadius: BorderRadius.only(
-            topRight: Radius.circular(16.r),
-            topLeft: Radius.circular(16.r),
+        return Scaffold(
+          extendBody: true,
+          body: viewModel.tabsList[viewModel.selectedTabIndex],
+          bottomNavigationBar: ClipRRect(
+            borderRadius: BorderRadius.only(
+              topRight: Radius.circular(16.r),
+              topLeft: Radius.circular(16.r),
+            ),
+            clipBehavior: Clip.antiAlias,
+            child: BottomNavigationBar(
+              type: BottomNavigationBarType.fixed,
+              unselectedLabelStyle: TextStyle(fontSize: 0),
+              selectedLabelStyle: TextStyle(fontSize: 0),
+              backgroundColor: AppColors.mainColor,
+              onTap: (index) {
+                viewModel.changeIndex(index);
+              },
+              items: [
+                builtBottomNavigationBarItem(
+                  iconName: AppAssets.homeIcon,
+                  index: 0,
+                ),
+                builtBottomNavigationBarItem(
+                  iconName: AppAssets.categoryIcon,
+                  index: 1,
+                ),
+                builtBottomNavigationBarItem(
+                  iconName: AppAssets.heartIcon,
+                  index: 2,
+                ),
+                builtBottomNavigationBarItem(
+                  iconName: AppAssets.userIcon,
+                  index: 3,
+                ),
+              ],
+            ),
           ),
-          clipBehavior: Clip.antiAlias,
-          child: BottomNavigationBar(
-
-            type: BottomNavigationBarType.fixed,
-            unselectedLabelStyle: TextStyle(fontSize: 0),
-            selectedLabelStyle: TextStyle(fontSize: 0),
-            backgroundColor: AppColors.mainColor,
-            onTap: (index) {
-              viewModel.changeIndex(index);
-            },
-            items: [
-              builtBottomNavigationBarItem(
-                iconName: AppAssets.homeIcon,
-                index: 0,
-              ),
-              builtBottomNavigationBarItem(
-                iconName: AppAssets.categoryIcon,
-                index: 1,
-              ),
-              builtBottomNavigationBarItem(
-                iconName: AppAssets.heartIcon,
-                index: 2,
-              ),
-              builtBottomNavigationBarItem(
-                iconName: AppAssets.userIcon,
-                index: 3,
-              ),
-            ],
-          ),
-        ),
-      );
+        );
       },
-
     );
   }
 

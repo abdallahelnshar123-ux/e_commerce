@@ -26,6 +26,8 @@ import '../../data/data_sources/remote/brand/impl/brand_remote_data_source_impl.
     as _i549;
 import '../../data/data_sources/remote/cart/cart_remote_data_source.dart'
     as _i358;
+import '../../data/data_sources/remote/cart/impl/cart_remote_data_source_impl.dart'
+    as _i84;
 import '../../data/data_sources/remote/category/category_remote_data_source.dart'
     as _i89;
 import '../../data/data_sources/remote/category/impl/category_remote_data_source_impl.dart'
@@ -95,6 +97,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i611.BrandRemoteDataSource>(
       () => _i549.BrandRemoteDataSourceImpl(gh<_i394.ApiServices>()),
     );
+    gh.factory<_i358.CartRemoteDataSource>(
+      () => _i84.CartRemoteDataSourceImpl(gh<_i394.ApiServices>()),
+    );
     gh.singleton<_i361.Dio>(
       () => getItModule.provideDio(
         gh<_i361.BaseOptions>(),
@@ -113,14 +118,17 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i244.BrandRepository>(
       () => _i829.BrandRepositoryImpl(gh<_i611.BrandRemoteDataSource>()),
     );
-    gh.factory<_i45.CartViewModel>(
-      () => _i45.CartViewModel(gh<_i1024.AddToCartUseCase>()),
-    );
     gh.factory<_i408.LoginUseCases>(
       () => _i408.LoginUseCases(gh<_i912.AuthRepository>()),
     );
     gh.factory<_i724.RegisterUseCases>(
       () => _i724.RegisterUseCases(gh<_i912.AuthRepository>()),
+    );
+    gh.factory<_i45.CartViewModel>(
+      () => _i45.CartViewModel(
+        gh<_i1024.AddToCartUseCase>(),
+        gh<_i136.GetCartItemsUseCase>(),
+      ),
     );
     gh.factory<_i495.CategoryRepository>(
       () => _i954.CategoryRepositoryImpl(gh<_i89.CategoryRemoteDataSource>()),

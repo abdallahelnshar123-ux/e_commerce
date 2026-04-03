@@ -1,4 +1,4 @@
-import 'package:e_commerce/data/model/response/cart/get/get_cart_dto.dart';
+import 'package:e_commerce/data/model/response/cart/get/cart_data_dto.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'get_cart_response_dto.g.dart';
@@ -12,13 +12,13 @@ class GetCartResponseDto {
   @JsonKey(name: "cartId")
   final String? cartId;
   @JsonKey(name: "data")
-  final GetCartDto? data;
+  final CartDataDto? cartData;
 
   GetCartResponseDto ({
     this.status,
     this.numOfCartItems,
     this.cartId,
-    this.data,
+    this.cartData,
   });
 
   factory GetCartResponseDto.fromJson(Map<String, dynamic> json) {

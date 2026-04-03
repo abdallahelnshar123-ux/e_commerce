@@ -1,10 +1,10 @@
 import 'package:e_commerce/data/model/response/product/product_dto.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'get_products_dto.g.dart';
+part 'product_data_dto.g.dart';
 
 @JsonSerializable()
-class GetProductsDto {
+class ProductDataDto {
   @JsonKey(name: "count")
   final int? count;
   @JsonKey(name: "_id")
@@ -14,18 +14,18 @@ class GetProductsDto {
   @JsonKey(name: "price")
   final int? price;
 
-  GetProductsDto ({
+  ProductDataDto ({
     this.count,
     this.id,
     this.product,
     this.price,
   });
 
-  factory GetProductsDto.fromJson(Map<String, dynamic> json) {
-    return _$GetProductsDtoFromJson(json);
+  factory ProductDataDto.fromJson(Map<String, dynamic> json) {
+    return _$ProductDataDtoFromJson(json);
   }
 
   Map<String, dynamic> toJson() {
-    return _$GetProductsDtoToJson(this);
+    return _$ProductDataDtoToJson(this);
   }
 }

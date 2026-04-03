@@ -110,7 +110,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     ],
                   ),
                   Spacer(),
-                  IncrementDecrementWidget(),
+                  IncrementDecrementWidget(count: 1,),
                 ],
               ),
             ),

@@ -1,5 +1,11 @@
+import 'package:e_commerce/domain/entities/response/cart/get/product_data.dart';
+import 'package:e_commerce/features/ui/cart_screen/cubit/cart_states.dart';
+import 'package:e_commerce/features/ui/cart_screen/cubit/cart_view_model.dart';
 import 'package:e_commerce/features/ui/cart_screen/widget/cart_item.dart';
+import 'package:e_commerce/features/ui/widgets/main_error_widget.dart';
+import 'package:e_commerce/features/ui/widgets/main_loading_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
@@ -19,6 +25,12 @@ class CartScreen extends StatefulWidget {
 
 class _CartScreenState extends State<CartScreen> {
   @override
+  void initState() {
+    super.initState();
+    context.read<CartViewModel>().getCartItems();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: builtCheckOutWidget(() {}),
@@ -29,7 +41,16 @@ class _CartScreenState extends State<CartScreen> {
         centerTitle: true,
         title: Text('Cart', style: AppStyles.medium20TextColor),
       ),
-      body: builtCartItemsList(),
+      body: BlocBuilder<CartViewModel, CartStates>(
+        builder: (context, state) {
+          if (state is GetCartItemsSuccessState) {
+            return builtCartItemsList(state.productsList);
+          } else if (state is GetCartItemsErrorState) {
+            return MainErrorWidget(errorMessage: state.errorMessage);
+          }
+          return MainLoadingWidget();
+        },
+      ),
     );
   }
 
@@ -48,11 +69,16 @@ class _CartScreenState extends State<CartScreen> {
     );
   }
 
-  Widget builtCartItemsList() {
+  Widget builtCartItemsList(List<ProductData> productsList) {
     return ListView.separated(
       padding: EdgeInsets.all(16.w),
-      itemCount: 10,
-      itemBuilder: (context, index) => CartItem(),
+      itemCount: productsList.length,
+      itemBuilder: (context, index) {
+        if (productsList[index].product != null) {
+          return CartItem(productData: productsList[index]);
+        }
+        return SizedBox.shrink();
+      },
       separatorBuilder: (BuildContext context, int index) =>
           SizedBox(height: 16.w),
     );
@@ -88,7 +114,11 @@ class _CartScreenState extends State<CartScreen> {
             children: [
               Text('Total price', style: AppStyles.medium18DescriptionColor),
               Text(
-                formatNumber(5234, true, 'EGP '),
+                formatNumber(
+                  context.watch<CartViewModel>().totalCartPrice,
+                  true,
+                  'EGP ',
+                ),
                 style: AppStyles.medium18TextColor,
               ),
             ],

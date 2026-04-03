@@ -1,5 +1,6 @@
 import 'package:e_commerce/core/exceptions/app_exceptions.dart';
 import 'package:e_commerce/domain/use_cases/add_to_cart_use_case.dart';
+import 'package:e_commerce/domain/use_cases/get_cart_items_use_case.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
@@ -9,10 +10,13 @@ import 'cart_states.dart';
 @injectable
 class CartViewModel extends Cubit<CartStates> {
   final AddToCartUseCase _addToCartUseCase;
+  final GetCartItemsUseCase _getCartItemsUseCase;
 
-  CartViewModel(this._addToCartUseCase) : super(CartInitState());
+  CartViewModel(this._addToCartUseCase, this._getCartItemsUseCase)
+    : super(CartInitState());
 
   int numOfCartItems = 0;
+  double totalCartPrice = 0;
 
   static CartViewModel get(BuildContext context) =>
       BlocProvider.of<CartViewModel>(context);
@@ -24,6 +28,31 @@ class CartViewModel extends Cubit<CartStates> {
       emit(AddToCartSuccessState(cartResponse: addCartResponse));
     } on AppException catch (e) {
       emit(AddToCartErrorState(errorMessage: e.message));
+    }
+  }
+
+  void getCartItems() async {
+    try {
+      emit(GetCartItemsLoadingState());
+      var getCartItemsResponse = await _getCartItemsUseCase.invoke();
+      numOfCartItems = getCartItemsResponse.numOfCartItems ?? 0;
+      totalCartPrice =
+          getCartItemsResponse.cartData?.totalCartPrice?.toDouble() ?? 0;
+      if (getCartItemsResponse.cartData?.productData != null) {
+        emit(
+          GetCartItemsSuccessState(
+            productsList: getCartItemsResponse.cartData!.productData!,
+          ),
+        );
+      } else {
+        emit(
+          GetCartItemsErrorState(
+            errorMessage: 'sorry we were unable to load cart',
+          ),
+        );
+      }
+    } on AppException catch (e) {
+      emit(GetCartItemsErrorState(errorMessage: e.message));
     }
   }
 }

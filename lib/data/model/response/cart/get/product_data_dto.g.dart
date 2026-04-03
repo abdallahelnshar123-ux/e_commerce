@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'get_products_dto.dart';
+part of 'product_data_dto.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-GetProductsDto _$GetProductsDtoFromJson(Map<String, dynamic> json) =>
-    GetProductsDto(
+ProductDataDto _$ProductDataDtoFromJson(Map<String, dynamic> json) =>
+    ProductDataDto(
       count: (json['count'] as num?)?.toInt(),
       id: json['_id'] as String?,
       product: json['product'] == null
@@ -16,7 +16,7 @@ GetProductsDto _$GetProductsDtoFromJson(Map<String, dynamic> json) =>
       price: (json['price'] as num?)?.toInt(),
     );
 
-Map<String, dynamic> _$GetProductsDtoToJson(GetProductsDto instance) =>
+Map<String, dynamic> _$ProductDataDtoToJson(ProductDataDto instance) =>
     <String, dynamic>{
       'count': instance.count,
       '_id': instance.id,

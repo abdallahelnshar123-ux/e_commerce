@@ -1,14 +1,15 @@
+import 'package:e_commerce/data/model/response/cart/get/product_data_dto.dart';
 import 'package:json_annotation/json_annotation.dart';
-part 'get_cart_dto.g.dart';
+part 'cart_data_dto.g.dart';
 
 @JsonSerializable()
-class GetCartDto {
+class CartDataDto {
   @JsonKey(name: "_id")
   final String? id;
   @JsonKey(name: "cartOwner")
   final String? cartOwner;
   @JsonKey(name: "products")
-  final List<GetCartDto>? products;
+  final List<ProductDataDto>? productData;
   @JsonKey(name: "createdAt")
   final String? createdAt;
   @JsonKey(name: "updatedAt")
@@ -18,21 +19,21 @@ class GetCartDto {
   @JsonKey(name: "totalCartPrice")
   final int? totalCartPrice;
 
-  GetCartDto ({
+  CartDataDto ({
     this.id,
     this.cartOwner,
-    this.products,
+    this.productData,
     this.createdAt,
     this.updatedAt,
     this.v,
     this.totalCartPrice,
   });
 
-  factory GetCartDto.fromJson(Map<String, dynamic> json) {
-    return _$GetCartDtoFromJson(json);
+  factory CartDataDto.fromJson(Map<String, dynamic> json) {
+    return _$CartDataDtoFromJson(json);
   }
 
   Map<String, dynamic> toJson() {
-    return _$GetCartDtoToJson(this);
+    return _$CartDataDtoToJson(this);
   }
 }
