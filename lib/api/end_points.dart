@@ -5,5 +5,5 @@ class EndPoints {
   static const String getAllCategoriesApi = 'categories';
   static const String getAllBrandsApi = 'brands';
   static const String getAllProductsApi = 'products';
-  static const String addToCartApi = 'cart';
+  static const String cartApi = 'cart';
 }
