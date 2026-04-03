@@ -47,12 +47,14 @@ import '../../domain/repository/cart/cart_repository.dart' as _i1048;
 import '../../domain/repository/category/category_repository.dart' as _i495;
 import '../../domain/repository/product/product_repository.dart' as _i798;
 import '../../domain/use_cases/add_to_cart_use_case.dart' as _i1024;
+import '../../domain/use_cases/delete_cart_item_use_case.dart' as _i267;
 import '../../domain/use_cases/get_all_brands_use_case.dart' as _i773;
 import '../../domain/use_cases/get_all_categories_use_case.dart' as _i201;
 import '../../domain/use_cases/get_all_products_use_case.dart' as _i939;
 import '../../domain/use_cases/get_cart_items_use_case.dart' as _i136;
 import '../../domain/use_cases/login_use_cases.dart' as _i408;
 import '../../domain/use_cases/register_use_cases.dart' as _i724;
+import '../../domain/use_cases/update_cart_item_use_case.dart' as _i469;
 import '../../features/ui/auth/login/cubit/login_view_model.dart' as _i245;
 import '../../features/ui/auth/register/cubit/register_view_model.dart'
     as _i873;
@@ -112,8 +114,14 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i1024.AddToCartUseCase>(
       () => _i1024.AddToCartUseCase(gh<_i1048.CartRepository>()),
     );
+    gh.factory<_i267.DeleteCartItemUseCase>(
+      () => _i267.DeleteCartItemUseCase(gh<_i1048.CartRepository>()),
+    );
     gh.factory<_i136.GetCartItemsUseCase>(
       () => _i136.GetCartItemsUseCase(gh<_i1048.CartRepository>()),
+    );
+    gh.factory<_i469.UpdateCartItemUseCase>(
+      () => _i469.UpdateCartItemUseCase(gh<_i1048.CartRepository>()),
     );
     gh.factory<_i244.BrandRepository>(
       () => _i829.BrandRepositoryImpl(gh<_i611.BrandRemoteDataSource>()),

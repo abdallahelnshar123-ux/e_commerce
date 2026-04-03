@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:e_commerce/api/end_points.dart';
 import 'package:e_commerce/data/model/request/cart/add/add_to_cart_request_dto.dart';
+import 'package:e_commerce/data/model/request/cart/update/update_product_count_dto.dart';
 import 'package:e_commerce/data/model/response/cart/add/add_to_cart_response_dto.dart';
 import 'package:e_commerce/data/model/response/cart/get/get_cart_response_dto.dart';
 import 'package:e_commerce/data/model/response/category_brand/category_or_brand_response_dto.dart';
@@ -40,4 +41,17 @@ abstract class ApiServices {
 
   @GET(EndPoints.cartApi)
   Future<GetCartResponseDto> getCartItems(@Header('token') String token);
+
+  @DELETE(EndPoints.deleteOrUpdateProductInCartApi)
+  Future<GetCartResponseDto> deleteCartItem(
+    @Header('token') String token,
+    @Path() String productId,
+  );
+
+  @PUT(EndPoints.deleteOrUpdateProductInCartApi)
+  Future<GetCartResponseDto> updateCartItem(
+    @Header('token') String token,
+    @Path() String productId,
+    @Body() UpdateProductCountDto updateProductCount,
+  );
 }
