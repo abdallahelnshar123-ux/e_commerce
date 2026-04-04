@@ -42,8 +42,19 @@ class _CartScreenState extends State<CartScreen> {
         title: Text('Cart', style: AppStyles.medium20TextColor),
       ),
       body: BlocBuilder<CartViewModel, CartStates>(
+        buildWhen: (previous, current) {
+          return current is GetCartItemsSuccessState ||
+              current is DeleteCartItemSuccessState ||
+              current is UpdateCartItemSuccessState;
+        },
         builder: (context, state) {
           if (state is GetCartItemsSuccessState) {
+            return builtCartItemsList(state.productsList);
+          }
+          if (state is DeleteCartItemSuccessState) {
+            return builtCartItemsList(state.productsList);
+          }
+          if (state is UpdateCartItemSuccessState) {
             return builtCartItemsList(state.productsList);
           } else if (state is GetCartItemsErrorState) {
             return MainErrorWidget(errorMessage: state.errorMessage);

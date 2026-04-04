@@ -3,9 +3,10 @@ import 'package:e_commerce/core/utils/app_assets.dart';
 import 'package:e_commerce/core/utils/app_colors.dart';
 import 'package:e_commerce/core/utils/app_styles.dart';
 import 'package:e_commerce/domain/entities/response/cart/get/product_data.dart';
-import 'package:e_commerce/domain/entities/response/product/product.dart';
+import 'package:e_commerce/features/ui/cart_screen/cubit/cart_view_model.dart';
 import 'package:e_commerce/features/ui/widgets/increment_decrement_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
@@ -66,7 +67,10 @@ class CartItem extends StatelessWidget {
                       style: IconButton.styleFrom(
                         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        context.read<CartViewModel>().deleteCartItem(
+                            productData.id ?? '');
+                      },
                       icon: SvgPicture.asset(
                         AppAssets.deleteIcon,
                         colorFilter: ColorFilter.mode(
@@ -85,10 +89,36 @@ class CartItem extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        formatNumber(productData.price ?? 0, true, 'EPG '),
+                        formatNumber(
+                          productData.price ?? 0,
+                          true,
+                          'EGP ',
+                        ),
                         style: AppStyles.medium14TextColor,
                       ),
-                      IncrementDecrementWidget(count: productData.count?? 0,),
+                      IncrementDecrementWidget(
+                        count: productData.count ?? 0,
+                        onPressedDecrement: () {
+                          int count = productData.count ?? 0;
+                          if (count > 1) {
+                            count--;
+                          }
+
+                          context.read<CartViewModel>().updateCartItem(
+                            productData.id ?? '',
+                            count,
+                          );
+                        },
+                        onPressedIncrement: () {
+                          int count = productData.count ?? 0;
+                          count++;
+
+                          context.read<CartViewModel>().updateCartItem(
+                            productData.id ?? '',
+                            count,
+                          );
+                        },
+                      ),
                     ],
                   ),
                 ),

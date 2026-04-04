@@ -6,6 +6,7 @@ import 'package:e_commerce/core/cache/shared_prefs_utils.dart';
 import 'package:e_commerce/core/exceptions/app_exceptions.dart';
 import 'package:e_commerce/data/data_sources/remote/cart/cart_remote_data_source.dart';
 import 'package:e_commerce/data/model/request/cart/add/add_to_cart_request_dto.dart';
+import 'package:e_commerce/data/model/request/cart/update/update_product_count_dto.dart';
 import 'package:e_commerce/domain/entities/response/cart/add/add_to_cart_response.dart';
 import 'package:e_commerce/domain/entities/response/cart/get/get_cart_response.dart';
 import 'package:injectable/injectable.dart';
@@ -41,6 +42,41 @@ class CartRemoteDataSourceImpl implements CartRemoteDataSource {
 
       var getCartResponse = await _apiServices.getCartItems(token.toString());
       return getCartResponse.toGetCartResponse();
+    } on DioException catch (e) {
+      String message = (e.error as AppException).message;
+      throw ServerException(message: message);
+    }
+  }
+
+  @override
+  Future<GetCartResponse> deleteCartItem(String productId) async {
+    try {
+      var token = SharedPrefsUtils.getData(key: ShredPrefsKeys.tokenKey);
+
+      var deleteCartItemResponse = await _apiServices.deleteCartItem(
+        token.toString(),
+        productId,
+      );
+      return deleteCartItemResponse.toGetCartResponse();
+    } on DioException catch (e) {
+      String message = (e.error as AppException).message;
+      throw ServerException(message: message);
+    }
+  }
+
+  @override
+  Future<GetCartResponse> updateCartItem(String productId, int count) async {
+    try {
+      var token = SharedPrefsUtils.getData(key: ShredPrefsKeys.tokenKey);
+      UpdateProductCountDto updateProductCountDto = UpdateProductCountDto(
+        count: count.toString(),
+      );
+      var updateCartItemResponse = await _apiServices.updateCartItem(
+        token.toString(),
+        productId,
+        updateProductCountDto,
+      );
+      return updateCartItemResponse.toGetCartResponse();
     } on DioException catch (e) {
       String message = (e.error as AppException).message;
       throw ServerException(message: message);

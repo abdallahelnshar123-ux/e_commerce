@@ -41,10 +41,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     return Scaffold(
       appBar: AppBar(
         actionsPadding: EdgeInsets.only(right: 14.w),
-        actions: [
-          builtActionButton(AppAssets.searchIcon),
-          CartIcon(),
-        ],
+        actions: [builtActionButton(AppAssets.searchIcon), CartIcon()],
 
         centerTitle: true,
         title: Text('Product Details', style: AppStyles.medium20TextColor),
@@ -110,7 +107,11 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     ],
                   ),
                   Spacer(),
-                  IncrementDecrementWidget(count: 1,),
+                  IncrementDecrementWidget(
+                    count: 1,
+                    onPressedDecrement: () {},
+                    onPressedIncrement: () {},
+                  ),
                 ],
               ),
             ),

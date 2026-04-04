@@ -230,7 +230,7 @@ class _ApiServices implements ApiServices {
       Options(method: 'DELETE', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'cart${productId}',
+            'cart/${productId}',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -263,7 +263,7 @@ class _ApiServices implements ApiServices {
       Options(method: 'PUT', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'cart${productId}',
+            'cart/${productId}',
             queryParameters: queryParameters,
             data: _data,
           )

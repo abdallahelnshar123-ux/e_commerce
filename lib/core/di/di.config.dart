@@ -132,12 +132,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i724.RegisterUseCases>(
       () => _i724.RegisterUseCases(gh<_i912.AuthRepository>()),
     );
-    gh.factory<_i45.CartViewModel>(
-      () => _i45.CartViewModel(
-        gh<_i1024.AddToCartUseCase>(),
-        gh<_i136.GetCartItemsUseCase>(),
-      ),
-    );
     gh.factory<_i495.CategoryRepository>(
       () => _i954.CategoryRepositoryImpl(gh<_i89.CategoryRemoteDataSource>()),
     );
@@ -149,6 +143,14 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i873.RegisterViewModel>(
       () => _i873.RegisterViewModel(gh<_i724.RegisterUseCases>()),
+    );
+    gh.factory<_i45.CartViewModel>(
+      () => _i45.CartViewModel(
+        gh<_i1024.AddToCartUseCase>(),
+        gh<_i136.GetCartItemsUseCase>(),
+        gh<_i267.DeleteCartItemUseCase>(),
+        gh<_i469.UpdateCartItemUseCase>(),
+      ),
     );
     gh.factory<_i773.GetAllBrandsUseCase>(
       () => _i773.GetAllBrandsUseCase(gh<_i244.BrandRepository>()),

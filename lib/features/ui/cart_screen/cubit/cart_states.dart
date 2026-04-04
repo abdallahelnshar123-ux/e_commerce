@@ -1,7 +1,5 @@
 import 'package:e_commerce/domain/entities/response/cart/add/add_to_cart_response.dart';
-import 'package:e_commerce/domain/entities/response/cart/get/get_cart_response.dart';
 import 'package:e_commerce/domain/entities/response/cart/get/product_data.dart';
-import 'package:e_commerce/domain/entities/response/product/product.dart';
 
 sealed class CartStates {}
 
@@ -33,4 +31,32 @@ class GetCartItemsErrorState extends CartStates {
   final String errorMessage;
 
   GetCartItemsErrorState({required this.errorMessage});
+}
+
+class DeleteCartItemLoadingState extends CartStates {}
+
+class DeleteCartItemSuccessState extends CartStates {
+  final List<ProductData> productsList;
+
+  DeleteCartItemSuccessState({required this.productsList});
+}
+
+class DeleteCartItemErrorState extends CartStates {
+  final String errorMessage;
+
+  DeleteCartItemErrorState({required this.errorMessage});
+}
+
+class UpdateCartItemLoadingState extends CartStates {}
+
+class UpdateCartItemSuccessState extends CartStates {
+  final List<ProductData> productsList;
+
+  UpdateCartItemSuccessState({required this.productsList});
+}
+
+class UpdateCartItemErrorState extends CartStates {
+  final String errorMessage;
+
+  UpdateCartItemErrorState({required this.errorMessage});
 }

@@ -6,7 +6,15 @@ import '../../../core/utils/app_styles.dart';
 
 class IncrementDecrementWidget extends StatelessWidget {
   final int count;
-  const IncrementDecrementWidget({super.key , required this.count});
+  final VoidCallback onPressedDecrement;
+  final VoidCallback onPressedIncrement;
+
+  const IncrementDecrementWidget({
+    super.key,
+    required this.count,
+    required this.onPressedDecrement,
+    required this.onPressedIncrement,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +33,7 @@ class IncrementDecrementWidget extends StatelessWidget {
               iconSize: 25.w,
             ),
             padding: EdgeInsets.zero,
-            onPressed: () {},
+            onPressed: onPressedDecrement,
             icon: Icon(
               Icons.remove_circle_outline_rounded,
               color: AppColors.whiteColor,
@@ -38,7 +46,7 @@ class IncrementDecrementWidget extends StatelessWidget {
               iconSize: 25.w,
             ),
             padding: EdgeInsets.zero,
-            onPressed: () {},
+            onPressed: onPressedIncrement,
             icon: Icon(
               Icons.add_circle_outline_rounded,
               color: AppColors.whiteColor,
