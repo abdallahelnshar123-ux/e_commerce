@@ -1,4 +1,4 @@
-import 'package:e_commerce/features/ui/home_screen/tabs/favorite_tab/widget/favourite_item.dart';
+import 'package:e_commerce/features/ui/home_screen/tabs/wishlist_tab/widget/wishlist_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -9,8 +9,8 @@ import '../../../../../core/utils/app_styles.dart';
 import '../../../widgets/cart_icon.dart';
 import '../../../widgets/custom_text_form_field.dart';
 
-class FavoriteTab extends StatelessWidget {
-  const FavoriteTab({super.key});
+class WishlistTab extends StatelessWidget {
+  const WishlistTab({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +66,7 @@ class FavoriteTab extends StatelessWidget {
     return ListView.separated(
       padding: EdgeInsets.all(16.w),
       itemCount: 10,
-      itemBuilder: (context, index) => FavouriteItem(),
+      itemBuilder: (context, index) => WishlistItem(),
       separatorBuilder: (BuildContext context, int index) =>
           SizedBox(height: 16.w),
     );

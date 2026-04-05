@@ -7,8 +7,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 
-class FavouriteItem extends StatelessWidget {
-  const FavouriteItem({super.key});
+class WishlistItem extends StatelessWidget {
+  const WishlistItem({super.key});
 
   @override
   Widget build(BuildContext context) {

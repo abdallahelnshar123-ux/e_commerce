@@ -1,9 +1,9 @@
 import 'package:e_commerce/features/ui/home_screen/cubit/home_screen_states.dart';
+import 'package:e_commerce/features/ui/home_screen/tabs/wishlist_tab/wishlist_tab.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
-import '../tabs/favorite_tab/favorite_tab.dart';
 import '../tabs/home_tab/home_tab.dart';
 import '../tabs/products_tab/products_tab.dart';
 import '../tabs/user_tab/user_tab.dart';
@@ -14,7 +14,7 @@ class HomeScreenViewModel extends Cubit<HomeScreenStates>{
   final List<Widget> tabsList = [
     HomeTab(),
     ProductsTab(),
-    FavoriteTab(),
+    WishlistTab(),
     UserTab(),
   ];
 

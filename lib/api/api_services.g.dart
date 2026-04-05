@@ -30,7 +30,7 @@ class _ApiServices implements ApiServices {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'auth/signin',
+            'v1/auth/signin',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -58,7 +58,7 @@ class _ApiServices implements ApiServices {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'auth/signup',
+            'v1/auth/signup',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -85,7 +85,7 @@ class _ApiServices implements ApiServices {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'categories',
+            'v1/categories',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -112,7 +112,7 @@ class _ApiServices implements ApiServices {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'brands',
+            'v1/brands',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -139,7 +139,7 @@ class _ApiServices implements ApiServices {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'products',
+            'v1/products',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -171,7 +171,7 @@ class _ApiServices implements ApiServices {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'cart',
+            'v2/cart',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -199,7 +199,7 @@ class _ApiServices implements ApiServices {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'cart',
+            'v2/cart',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -230,7 +230,7 @@ class _ApiServices implements ApiServices {
       Options(method: 'DELETE', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'cart/${productId}',
+            'v2/cart/${productId}',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -263,7 +263,7 @@ class _ApiServices implements ApiServices {
       Options(method: 'PUT', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'cart/${productId}',
+            'v2/cart/${productId}',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -273,6 +273,69 @@ class _ApiServices implements ApiServices {
     late GetCartResponseDto _value;
     try {
       _value = GetCartResponseDto.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options, response: _result);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<AddOrRemoveProductToWishlistResponseDto> addProductToWishlist(
+    AddProductToWishlistRequestDto addProductToWishListRequest,
+    String token,
+  ) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'token': token};
+    _headers.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    _data.addAll(addProductToWishListRequest.toJson());
+    final _options = _setStreamType<AddOrRemoveProductToWishlistResponseDto>(
+      Options(method: 'POST', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            'v1/wishlist',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late AddOrRemoveProductToWishlistResponseDto _value;
+    try {
+      _value = AddOrRemoveProductToWishlistResponseDto.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options, response: _result);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<AddOrRemoveProductToWishlistResponseDto> deleteProductFromWishlist(
+    String token,
+    String productId,
+  ) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'token': token};
+    _headers.removeWhere((k, v) => v == null);
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<AddOrRemoveProductToWishlistResponseDto>(
+      Options(method: 'DELETE', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            'v1/wishlist/${productId}',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late AddOrRemoveProductToWishlistResponseDto _value;
+    try {
+      _value = AddOrRemoveProductToWishlistResponseDto.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options, response: _result);
       rethrow;

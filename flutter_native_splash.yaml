@@ -114,7 +114,7 @@ flutter_native_splash:
   # Has no effect in web since web has no notification bar.
   fullscreen: false                # default false
     # if you dont want to hide notif bar, for android just set this to false,
-    # but for ios, add this to your flutter main():
+    # but for ios, add_remove this to your flutter main():
   # WidgetsFlutterBinding.ensureInitialized();
   # SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.bottom, SystemUiOverlay.top], );
 
