@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../widgets/already_or_donot_have_account_widget.dart';
+import '../../widgets/already_or_do_not_have_account_widget.dart';
 import '../../widgets/custom_elevated_button.dart';
 import '../../widgets/custom_text_form_field.dart';
 
@@ -35,7 +35,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     emailController.dispose();
     passwordController.dispose();
@@ -93,7 +92,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     borderRadius: 16.r,
                     validator: (text) {
                       if (text?.trim().isEmpty ?? true) {
-                        return 'please_enter_email';
+                        return 'please enter your name';
                       }
                       return null;
                     },
@@ -112,7 +111,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     borderRadius: 16.r,
                     validator: (text) {
                       if (text?.trim().isEmpty ?? true) {
-                        return 'please_enter_email';
+                        return 'please enter mobile no.';
                       }
                       return null;
                     },
@@ -131,13 +130,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     borderRadius: 16.r,
                     validator: (text) {
                       if (text?.trim().isEmpty ?? true) {
-                        return 'please_enter_email';
+                        return 'please enter email';
                       }
                       final bool emailValid = RegExp(
                         r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
                       ).hasMatch(text!);
                       if (!emailValid) {
-                        return 'please_enter_valid_email';
+                        return 'please enter valid email';
                       }
                       return null;
                     },
@@ -156,10 +155,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     borderRadius: 16.r,
                     validator: (text) {
                       if (text?.trim().isEmpty ?? true) {
-                        return 'please_enter_password';
+                        return 'please enter password';
                       }
                       if (text!.length < 6) {
-                        return 'password_must_be_at_least';
+                        return 'password must be at least 6 digits';
                       }
                       return null;
                     },
@@ -194,10 +193,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     borderRadius: 16.r,
                     validator: (text) {
                       if (text?.trim().isEmpty ?? true) {
-                        return 'please_confirm_password';
+                        return 'please confirm password';
                       }
                       if (text != passwordController.text) {
-                        return 'password_does_not_match';
+                        return 'password does not match';
                       }
                       return null;
                     },
@@ -256,7 +255,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     },
                   ),
                   SizedBox(height: 32.h),
-
                 ],
               ),
             ),
